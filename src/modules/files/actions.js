@@ -15,7 +15,7 @@ export const getFiles = () => (dispatch) => {
       return
     }
 
-    files.forEach(file => dispatch(addFile(file))) // TODO let add file take an array
+    dispatch(addFile(files))
   })
 }
 
