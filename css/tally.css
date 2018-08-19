@@ -1,3 +1,16 @@
 .pane {
   padding: 1em;
 }
+
+.grid {
+  flex: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+.grid img {
+  width: 33.3%;
+  height: auto;
+}

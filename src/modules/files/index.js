@@ -1,8 +1,8 @@
 import fs from 'fs'
-import path from 'path'
 import React from 'react'
 
 import { addFiles, getPathToTaggables } from './actions'
+import Grid from './components/grid'
 
 class Files extends React.PureComponent {
   constructor(props) {
@@ -32,7 +32,7 @@ class Files extends React.PureComponent {
         >
           + Add Files
         </button>
-        {this.state.files.map((filename) => <img src={path.join(getPathToTaggables(), filename)} />)}
+        <Grid files={this.state.files} />
       </div>
     )
   }
