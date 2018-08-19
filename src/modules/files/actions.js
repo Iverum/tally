@@ -9,6 +9,7 @@ const getPathToTaggables = () => path.join(app.getPath('userData'), 'taggables')
 const linkFilesToTaggables = (filenames = [], cb) => {
   const taggablePath = getPathToTaggables()
   let fileCount = filenames.length
+
   filenames.forEach((filename) => {
     const linkName = path.join(taggablePath, path.basename(filename))
     fs.link(filename, linkName, (err) => {

@@ -2,20 +2,19 @@ import React from 'react'
 
 import { addFiles } from './actions'
 
-class Home extends React.PureComponent {
+class Files extends React.PureComponent {
   render() {
     return (
       <div>
-        <h1>Files</h1>
         <button
-          className="btn btn-large btn-primary"
+          className="btn btn-large btn-positive"
           onClick={addFiles}
         >
-          Add File
+          + Add Files
         </button>
       </div>
     )
   }
 }
 
-export default Home
+export default Files
