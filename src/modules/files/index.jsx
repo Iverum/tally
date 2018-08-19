@@ -1,26 +1,14 @@
-import fs from 'fs'
+import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-import { addFiles, getPathToTaggables } from './actions'
+import { addFiles, getFiles } from './actions'
 import Grid from './components/grid'
 
 class Files extends React.PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = {
-      files: []
-    }
-  }
-
   componentWillMount() {
-    fs.readdir(getPathToTaggables(), (err, files) => {
-      if (err) {
-        console.log({ err }, 'An error ocurred fetching taggable files')
-        return
-      }
-
-      this.setState({ files })
-    })
+    this.props.actions.getFiles()
   }
 
   render() {
@@ -32,10 +20,23 @@ class Files extends React.PureComponent {
         >
           + Add Files
         </button>
-        <Grid files={this.state.files} />
+        <Grid files={this.props.files} />
       </div>
     )
   }
 }
 
-export default Files
+const mapStateToProps = state => ({
+  files: state.files
+})
+
+const mapActionsToDispatch = dispatch => ({
+  actions: bindActionCreators({ getFiles }, dispatch)
+})
+
+Files.propTypes = {
+  actions: PropTypes.shape({ getFiles: PropTypes.func.isRequired }).isRequired,
+  files: PropTypes.arrayOf(PropTypes.string).isRequired
+}
+
+export default connect(mapStateToProps, mapActionsToDispatch)(Files)

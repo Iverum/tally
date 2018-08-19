@@ -2,9 +2,22 @@ import { remote } from 'electron'
 import fs from 'fs'
 import path from 'path'
 
+import { addFile } from './dux'
+
 const { app, dialog } = remote
 
 export const getPathToTaggables = () => path.join(app.getPath('userData'), 'taggables')
+
+export const getFiles = () => (dispatch) => {
+  fs.readdir(getPathToTaggables(), (err, files) => {
+    if (err) {
+      console.log({ err }, 'An error ocurred fetching taggable files')
+      return
+    }
+
+    files.forEach(file => dispatch(addFile(file))) // TODO let add file take an array
+  })
+}
 
 const linkFilesToTaggables = (filenames = [], cb) => {
   const taggablePath = getPathToTaggables()
