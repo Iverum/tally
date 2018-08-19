@@ -13,7 +13,7 @@ const linkFilesToTaggables = (filenames = [], cb) => {
   filenames.forEach((filename) => {
     const linkName = path.join(taggablePath, path.basename(filename))
     fs.link(filename, linkName, (err) => {
-      fileCount--
+      fileCount -= 1
 
       if (err) {
         cb(err)
@@ -33,7 +33,7 @@ export const addFiles = () => {
     title: 'Add File',
     defaultPath: picturesPath,
     buttonLabel: 'Add',
-    filters: [{name: 'Images', extensions: ['jpg', 'png', 'gif']}],
+    filters: [{ name: 'Images', extensions: ['jpg', 'png', 'gif'] }],
     properties: ['openFile', 'multiSelections']
   }, (filePaths) => {
     linkFilesToTaggables(filePaths, (err) => {

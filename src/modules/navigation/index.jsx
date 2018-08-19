@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { MemoryRouter as Router } from 'react-router-dom'
 
@@ -20,6 +21,13 @@ class Navigation extends React.PureComponent {
       </Router>
     )
   }
+}
+
+Navigation.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired
 }
 
 export default Navigation
