@@ -3,7 +3,7 @@ import React from 'react'
 class Home extends React.PureComponent {
   render() {
     return (
-      <div>
+      <div className="pane">
         <h2>Home</h2>
       </div>
     )

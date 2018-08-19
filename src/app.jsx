@@ -11,9 +11,13 @@ export default class App extends React.Component {
   render() {
     return (
       <Router>
-        <div>
-          <Drawer />
-          <Route exact path="/" component={Home}/>
+        <div className="window">
+          <div className="window-content">
+            <div className="pane-group">
+              <Drawer />
+              <Route exact path="/" component={Home} />
+            </div>
+          </div>
         </div>
       </Router>
     )

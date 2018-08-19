@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 class Drawer extends React.PureComponent {
   render() {
     return (
-      <div>
+      <div className="pane-sm sidebar">
         <ul>
           <li><Link to="/">Home</Link></li>
         </ul>
@@ -12,3 +12,5 @@ class Drawer extends React.PureComponent {
     )
   }
 }
+
+export default Drawer
