@@ -1,22 +1,23 @@
+import Promise from 'bluebird'
 import { remote } from 'electron'
 import fs from 'fs'
 import path from 'path'
+
+Promise.promisifyAll(fs)
 
 import { TAGGABLES_DIR } from './constants'
 import { addFile } from './dux'
 
 const { app, dialog } = remote
 
-export const getFiles = () => (dispatch) => {
-  fs.readdir(TAGGABLES_DIR, (err, files) => {
-    if (err) {
-      console.log({ err }, 'An error ocurred fetching taggable files')
-      return
-    }
-
-    dispatch(addFile(files.map(basename => path.join(TAGGABLES_DIR, basename))))
+/**
+ * Gets all files from the USER_DATA/taggables directory and adds them to the Redux store.
+ */
+export const getFiles = () => (dispatch) => fs.readdirAsync(TAGGABLES_DIR)
+  .then(files => dispatch(addFile(files.map(basename => path.join(TAGGABLES_DIR, basename)))))
+  .catch((err) => {
+    console.log({ err }, 'An error ocurred fetching taggable files')
   })
-}
 
 const linkFilesToTaggables = (filenames = [], cb) => {
   const taggablePath = TAGGABLES_DIR

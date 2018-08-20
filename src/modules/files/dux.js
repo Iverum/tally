@@ -2,7 +2,7 @@ import isArray from 'lodash/isArray'
 import union from 'lodash/union'
 
 // ACTION TYPES
-const ADD_FILE = 'tally/files/ADD_NEW_FILE'
+export const ADD_FILE = 'tally/files/ADD_NEW_FILE'
 const REMOVE_FILE = 'tally/files/REMOVE_FILE'
 
 // ACTION CREATORS
