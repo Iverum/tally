@@ -1,7 +1,7 @@
-import Constants from '../constants'
+import { TAGGABLES } from '../constants'
 
 describe('src/constants.js', () => {
   it('should have a TAGGABLES constant', () => {
-    expect(Constants.TAGGABLES).toEqual('taggables')
+    expect(TAGGABLES).toEqual('taggables')
   })
 })

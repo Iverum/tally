@@ -8,5 +8,9 @@
     "react/prefer-stateless-function": 0,
     "comma-dangle": 0,
     "semi": 0
+  },
+  "plugins": ["jest"],
+  "env": {
+    "jest/globals": true
   }
 }
