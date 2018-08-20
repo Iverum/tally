@@ -16,7 +16,7 @@ class Files extends React.PureComponent {
       <div>
         <button
           className="btn btn-large btn-positive"
-          onClick={addFiles}
+          onClick={this.props.actions.addFiles}
         >
           + Add Files
         </button>
@@ -31,11 +31,14 @@ const mapStateToProps = state => ({
 })
 
 const mapActionsToDispatch = dispatch => ({
-  actions: bindActionCreators({ getFiles }, dispatch)
+  actions: bindActionCreators({ addFiles, getFiles }, dispatch)
 })
 
 Files.propTypes = {
-  actions: PropTypes.shape({ getFiles: PropTypes.func.isRequired }).isRequired,
+  actions: PropTypes.shape({
+    addFiles: PropTypes.func.isRequired,
+    getFiles: PropTypes.func.isRequired
+  }).isRequired,
   files: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 

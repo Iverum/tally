@@ -2,26 +2,26 @@ import { remote } from 'electron'
 import fs from 'fs'
 import path from 'path'
 
+import Constants from './constants'
 import { addFile } from './dux'
 
 const { app, dialog } = remote
 
-export const getPathToTaggables = () => path.join(app.getPath('userData'), 'taggables')
-
 export const getFiles = () => (dispatch) => {
-  fs.readdir(getPathToTaggables(), (err, files) => {
+  fs.readdir(Constants.TAGGABLE_DIR, (err, files) => {
     if (err) {
       console.log({ err }, 'An error ocurred fetching taggable files')
       return
     }
 
-    dispatch(addFile(files))
+    dispatch(addFile(files.map(basename => path.join(Constants.TAGGABLE_DIR, basename))))
   })
 }
 
 const linkFilesToTaggables = (filenames = [], cb) => {
-  const taggablePath = getPathToTaggables()
+  const taggablePath = Constants.TAGGABLE_DIR
   let fileCount = filenames.length
+  let linkedFilenames = []
 
   filenames.forEach((filename) => {
     const linkName = path.join(taggablePath, path.basename(filename))
@@ -29,18 +29,20 @@ const linkFilesToTaggables = (filenames = [], cb) => {
       fileCount -= 1
 
       if (err) {
-        cb(err)
+        cb(err, linkedFilenames)
         return
       }
 
+      linkedFilenames.push(linkName)
+
       if (fileCount <= 0) {
-        cb(null)
+        cb(null, linkedFilenames)
       }
     })
   })
 }
 
-export const addFiles = () => {
+export const addFiles = () => (dispatch) => {
   const picturesPath = app.getPath('pictures')
   dialog.showOpenDialog(remote.getCurrentWindow(), {
     title: 'Add File',
@@ -49,11 +51,13 @@ export const addFiles = () => {
     filters: [{ name: 'Images', extensions: ['jpg', 'png', 'gif'] }],
     properties: ['openFile', 'multiSelections']
   }, (filePaths) => {
-    linkFilesToTaggables(filePaths, (err) => {
+    linkFilesToTaggables(filePaths, (err, linkedFiles) => {
       if (err) {
         console.log(err)
-      } else {
-        console.log('All files linked')
+      }
+
+      if (linkedFiles.length > 0) {
+        dispatch(addFile(linkedFiles))
       }
     })
   })

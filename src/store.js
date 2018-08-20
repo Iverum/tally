@@ -3,6 +3,8 @@ import thunk from 'redux-thunk'
 
 import files from './modules/files/dux'
 
+let store = null
+
 function createRootReducer() {
   return combineReducers({
     files
@@ -10,5 +12,15 @@ function createRootReducer() {
 }
 
 export default function configureStore(initialState = {}) {
-  return createStore(createRootReducer(), initialState, applyMiddleware(thunk))
+  if (store !== null) {
+    console.log('REPLACING REDUCER')
+    store.replaceReducer(createRootReducer())
+  }
+
+  if (store === null) {
+    console.log('CREATING STORE')
+    store = createStore(createRootReducer(), initialState, applyMiddleware(thunk))
+  }
+
+  return store
 }

@@ -12,7 +12,7 @@ class FileGrid extends React.PureComponent {
           <img
             alt="TODO" // TODO replace this with meaningful tag data
             key={filename}
-            src={path.join(getPathToTaggables(), filename)}
+            src={filename}
           />
         ))}
       </div>
