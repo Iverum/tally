@@ -1,8 +1,5 @@
-import path from 'path'
 import PropTypes from 'prop-types'
 import React from 'react'
-
-import { getPathToTaggables } from '../actions'
 
 class FileGrid extends React.PureComponent {
   render() {

@@ -19,6 +19,19 @@ export const removeFile = fileName => ({
 // REDUCER
 const initialState = []
 
+function reduceAddFile(state = initialState, action) {
+  if (isArray(action.fileName)) {
+    return union(state, action.fileName)
+  }
+
+  // If the file is already in our list we can just return state
+  if (state.includes(action.fileName)) {
+    return state
+  }
+
+  return state.concat([action.fileName])
+}
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_FILE: {
@@ -32,17 +45,4 @@ export default (state = initialState, action) => {
     default:
       return state
   }
-}
-
-function reduceAddFile(state = initialState, action) {
-  if (isArray(action.fileName)) {
-    return union(state, action.fileName)
-  }
-
-  // If the file is already in our list we can just return state
-  if (state.includes(action.fileName)) {
-    return state
-  }
-
-  return state.concat([action.fileName])
 }

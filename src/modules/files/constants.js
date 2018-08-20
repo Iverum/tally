@@ -1,10 +1,12 @@
 import { remote } from 'electron'
 import path from 'path'
 
-import Constants from '../../constants'
+import { TAGGABLES } from '../../constants'
 
 const { app } = remote
 
+export const TAGGABLES_DIR = path.join(app.getPath('userData'), TAGGABLES)
+
 export default {
-  TAGGABLE_DIR: path.join(app.getPath('userData'), Constants.TAGGABLES)
+  TAGGABLES_DIR
 }
