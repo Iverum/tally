@@ -11,14 +11,16 @@ function createRootReducer() {
   })
 }
 
+/**
+ * Configures a singleton instance of a Redux store.
+ * @param {Object} initialState The initial state for the Redux store.
+ */
 export default function configureStore(initialState = {}) {
   if (store !== null) {
-    console.log('REPLACING REDUCER')
     store.replaceReducer(createRootReducer())
   }
 
   if (store === null) {
-    console.log('CREATING STORE')
     store = createStore(createRootReducer(), initialState, applyMiddleware(thunk))
   }
 
