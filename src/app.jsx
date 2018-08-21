@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import { Route } from 'react-router-dom'
 
 import Media from './modules/media'
+import NewMedia from './modules/media/new'
 import Navigation from './modules/navigation'
 import configureStore from './store'
 
@@ -14,6 +15,7 @@ export default class App extends React.Component {
       <Provider store={store}>
         <Navigation>
           <Route exact path="/" component={Media} />
+          <Route path="/new" component={NewMedia} />
         </Navigation>
       </Provider>
     )

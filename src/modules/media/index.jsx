@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 
-import { addMedia, getAllMedia } from './actions'
+import { getAllMedia } from './actions'
 import Grid from './components/grid'
 
 class Media extends React.PureComponent {
@@ -14,12 +15,7 @@ class Media extends React.PureComponent {
   render() {
     return (
       <div>
-        <button
-          className="btn btn-large btn-positive"
-          onClick={this.props.actions.addMedia}
-        >
-          + Add Media
-        </button>
+        <Link to="/new"><button className="btn btn-large btn-positive">+ Add Media</button></Link>
         <Grid media={this.props.media} />
       </div>
     )
@@ -31,12 +27,11 @@ const mapStateToProps = state => ({
 })
 
 const mapActionsToDispatch = dispatch => ({
-  actions: bindActionCreators({ addMedia, getAllMedia }, dispatch)
+  actions: bindActionCreators({ getAllMedia }, dispatch)
 })
 
 Media.propTypes = {
   actions: PropTypes.shape({
-    addMedia: PropTypes.func.isRequired,
     getAllMedia: PropTypes.func.isRequired
   }).isRequired,
   media: PropTypes.arrayOf(PropTypes.object).isRequired
