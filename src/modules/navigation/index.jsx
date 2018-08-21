@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 
 import { initialize } from '../../database/actions'
 import Drawer from './components/drawer'
+import LoadingIndicator from './components/loading'
 
 class Navigation extends React.PureComponent {
   componentWillMount() {
@@ -14,7 +15,7 @@ class Navigation extends React.PureComponent {
 
   render() {
     if (!this.props.isReady) {
-      return null // TODO loading screen
+      return <LoadingIndicator />
     }
 
     return (
