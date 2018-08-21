@@ -5,16 +5,17 @@ import path from 'path'
 
 Promise.promisifyAll(fs)
 
+import { Taggable } from '../database'
 import { TAGGABLES_DIR } from './constants'
-import { addFile } from './dux'
+import { addMedia } from './dux'
 
 const { app, dialog } = remote
 
 /**
- * Gets all files from the USER_DATA/taggables directory and adds them to the Redux store.
+ * Gets all Taggables from the database and adds them to the Redux store.
  */
-export const getFiles = () => (dispatch) => fs.readdirAsync(TAGGABLES_DIR)
-  .then(files => dispatch(addFile(files.map(basename => path.join(TAGGABLES_DIR, basename)))))
+export const getAllMedia = () => (dispatch) => Taggable.findAll()
+  .then((taggables = []) => dispatch(addMedia(taggables)))
   .catch((err) => {
     console.log({ err }, 'An error ocurred fetching taggable files')
   })

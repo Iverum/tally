@@ -2,7 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { Route } from 'react-router-dom'
 
-import Files from './modules/files'
+import Media from './modules/media'
 import Navigation from './modules/navigation'
 import configureStore from './store'
 
@@ -13,7 +13,7 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <Navigation>
-          <Route exact path="/" component={Files} />
+          <Route exact path="/" component={Media} />
         </Navigation>
       </Provider>
     )

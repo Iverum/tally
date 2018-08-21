@@ -1,13 +1,15 @@
 import { applyMiddleware, createStore, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 
-import files from './modules/files/dux'
+import database from './modules/database/dux'
+import media from './modules/media/dux'
 
 let store = null
 
 function createRootReducer() {
   return combineReducers({
-    files
+    database,
+    media
   })
 }
 

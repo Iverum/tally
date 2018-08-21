@@ -1,11 +1,22 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
 
+import { initialize } from '../database/dux'
 import Drawer from './components/drawer'
 
 class Navigation extends React.PureComponent {
+  componentWillMount() {
+    this.props.actions.initialize()
+  }
+
   render() {
+    if (!this.props.isReady) {
+      return null // TODO loading screen
+    }
+
     return (
       <Router>
         <div className="window">
@@ -30,4 +41,12 @@ Navigation.propTypes = {
   ]).isRequired
 }
 
-export default Navigation
+const mapStateToProps = state => ({
+  isReady: state.database.ready
+})
+
+const mapActionsToDispatch = dispatch => ({
+  actions: bindActionCreators({ initialize }, dispatch)
+})
+
+export default connect(mapStateToProps, mapActionsToDispatch)(Navigation)

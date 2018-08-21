@@ -38,11 +38,4 @@ export const Taggable = sequelize.define('Taggable', {
   }
 })
 
-Taggable.sync()
-
-export default {
-  sequelize,
-  models: {
-    Taggable
-  }
-}
+export default sequelize
