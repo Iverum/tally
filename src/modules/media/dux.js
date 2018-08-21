@@ -4,21 +4,28 @@ import isArray from 'lodash/isArray'
 export const ADD_MEDIA = 'tally/media/ADD_MEDIA'
 
 // ACTION CREATORS
-export const addMedia = taggable => ({ // TODO document
+export const addMedia = taggable => ({
   type: ADD_MEDIA,
   media: taggable
 })
 
 // REDUCER
-const initialState = []
+const initialState = {}
+
+function mapById(media = []) {
+  const map = {}
+  media.forEach((m) => { map[m.id] = m })
+  return map
+}
 
 function reduceAddFile(state = initialState, action) {
   // TODO handle deduplication
   if (isArray(action.media)) {
-    return state.concat(action.media)
+    const mappedMedia = mapById(action.media)
+    return Object.assign({}, state, mappedMedia)
   }
 
-  return state.concat([action.media])
+  return Object.assign({}, state, { [action.media.id]: action.media })
 }
 
 export default (state = initialState, action) => {

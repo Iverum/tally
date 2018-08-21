@@ -27,7 +27,7 @@ class Media extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  media: state.media
+  media: Object.values(state.media)
 })
 
 const mapActionsToDispatch = dispatch => ({
