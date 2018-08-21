@@ -1,5 +1,3 @@
-import database from './'
-
 // ACTION TYPES
 const INITIALIZED = 'tally/database/INITIALIZED'
 

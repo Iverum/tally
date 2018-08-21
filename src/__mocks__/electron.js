@@ -3,3 +3,7 @@ export const remote = {
     getPath: () => 'test'
   }
 }
+
+export default {
+  remote
+}

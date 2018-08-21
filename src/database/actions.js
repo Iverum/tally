@@ -8,3 +8,7 @@ export const initialize = () => (dispatch) => {
   database.sync()
     .then(() => dispatch(markInitialized()))
 }
+
+export default {
+  initialize
+}

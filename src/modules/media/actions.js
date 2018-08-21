@@ -1,9 +1,6 @@
-import Promise from 'bluebird'
 import { remote } from 'electron'
 import fs from 'fs'
 import path from 'path'
-
-Promise.promisifyAll(fs)
 
 import { Taggable } from '../../database'
 import { TAGGABLES_DIR } from './constants'
@@ -14,7 +11,7 @@ const { app, dialog } = remote
 /**
  * Gets all Taggables from the database and adds them to the Redux store.
  */
-export const getAllMedia = () => (dispatch) => Taggable.findAll({ raw: true })
+export const getAllMedia = () => dispatch => Taggable.findAll({ raw: true })
   .then((taggables = []) => dispatch(addTaggable(taggables)))
   .catch((err) => {
     console.log({ err }, 'An error ocurred fetching taggable files')
@@ -42,7 +39,7 @@ export const addMedia = () => (dispatch) => {
       }
 
       Taggable.create({ path: linkname }, { raw: true })
-        .then((taggable) => dispatch(addTaggable(taggable)))
+        .then(taggable => dispatch(addTaggable(taggable)))
     })
   })
 }

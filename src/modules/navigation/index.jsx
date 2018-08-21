@@ -35,10 +35,12 @@ class Navigation extends React.PureComponent {
 }
 
 Navigation.propTypes = {
+  actions: PropTypes.shape({ initialize: PropTypes.func.isRequired }).isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
-  ]).isRequired
+  ]).isRequired,
+  isReady: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
