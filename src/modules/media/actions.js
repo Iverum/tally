@@ -5,11 +5,12 @@ import path from 'path'
 
 Promise.promisifyAll(fs)
 
-import { Taggable } from '../../database'
+import models from '../../database/models'
 import { TAGGABLES_DIR } from './constants'
 import { addMedia } from './dux'
 
 const { app, dialog } = remote
+const { Taggable } = models
 
 /**
  * Gets all Taggables from the database and adds them to the Redux store.
