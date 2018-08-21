@@ -5,7 +5,7 @@ import path from 'path'
 
 Promise.promisifyAll(fs)
 
-import { Taggable } from '../database'
+import { Taggable } from '../../database'
 import { TAGGABLES_DIR } from './constants'
 import { addMedia } from './dux'
 

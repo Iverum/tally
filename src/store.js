@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 
-import database from './modules/database/dux'
+import database from './database/dux'
 import media from './modules/media/dux'
 
 let store = null
