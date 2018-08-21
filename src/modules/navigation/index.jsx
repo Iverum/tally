@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 
-import { initialize } from '../../database/dux'
+import { initialize } from '../../database/actions'
 import Drawer from './components/drawer'
 
 class Navigation extends React.PureComponent {

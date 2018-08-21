@@ -4,14 +4,9 @@ import database from './'
 const INITIALIZED = 'tally/database/INITIALIZED'
 
 // ACTION CREATORS
-const markInitialized = () => ({
+export const markInitialized = () => ({
   type: INITIALIZED
 })
-
-export const initialize = () => (dispatch) => {
-  database.sync()
-    .then(() => dispatch(markInitialized()))
-}
 
 // REDUCER
 const initialState = {
