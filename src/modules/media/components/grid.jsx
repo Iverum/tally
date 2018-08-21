@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-class FileGrid extends React.PureComponent {
+class MediaGrid extends React.PureComponent {
   render() {
     return (
       <div className="grid">
-        {this.props.files.map(filename => (
+        {this.props.media.map(taggable => (
           <img
             alt="TODO" // TODO replace this with meaningful tag data
-            key={filename}
-            src={filename}
+            key={taggable.id}
+            src={taggable.path}
           />
         ))}
       </div>
@@ -17,12 +17,12 @@ class FileGrid extends React.PureComponent {
   }
 }
 
-FileGrid.propTypes = {
-  files: PropTypes.arrayOf(PropTypes.string)
+MediaGrid.propTypes = {
+  media: PropTypes.arrayOf(PropTypes.object)
 }
 
-FileGrid.defaultProps = {
-  files: []
+MediaGrid.defaultProps = {
+  media: []
 }
 
-export default FileGrid
+export default MediaGrid

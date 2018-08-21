@@ -7,7 +7,7 @@ Promise.promisifyAll(fs)
 
 import models from '../../database/models'
 import { TAGGABLES_DIR } from './constants'
-import { addMedia } from './dux'
+import { addMedia as addTaggable } from './dux'
 
 const { app, dialog } = remote
 const { Taggable } = models
@@ -15,53 +15,35 @@ const { Taggable } = models
 /**
  * Gets all Taggables from the database and adds them to the Redux store.
  */
-export const getAllMedia = () => (dispatch) => Taggable.findAll()
-  .then((taggables = []) => dispatch(addMedia(taggables)))
+export const getAllMedia = () => (dispatch) => Taggable.findAll({ raw: true })
+  .then((taggables = []) => dispatch(addTaggable(taggables)))
   .catch((err) => {
     console.log({ err }, 'An error ocurred fetching taggable files')
   })
 
-const linkFilesToTaggables = (filenames = [], cb) => {
-  const taggablePath = TAGGABLES_DIR
-  let fileCount = filenames.length
-  const linkedFilenames = []
-
-  filenames.forEach((filename) => {
-    const linkName = path.join(taggablePath, path.basename(filename))
-    fs.link(filename, linkName, (err) => {
-      fileCount -= 1
-
-      if (err) {
-        cb(err, linkedFilenames)
-        return
-      }
-
-      linkedFilenames.push(linkName)
-
-      if (fileCount <= 0) {
-        cb(null, linkedFilenames)
-      }
-    })
-  })
-}
-
-export const addFiles = () => (dispatch) => {
+export const addMedia = () => (dispatch) => {
   const picturesPath = app.getPath('pictures')
   dialog.showOpenDialog(remote.getCurrentWindow(), {
     title: 'Add File',
     defaultPath: picturesPath,
     buttonLabel: 'Add',
     filters: [{ name: 'Images', extensions: ['jpg', 'png', 'gif'] }],
-    properties: ['openFile', 'multiSelections']
-  }, (filePaths) => {
-    linkFilesToTaggables(filePaths, (err, linkedFiles) => {
+    properties: ['openFile']
+  }, (filepaths) => {
+    if (!filepaths) {
+      return
+    }
+
+    const filename = filepaths[0]
+    const linkname = path.join(TAGGABLES_DIR, path.basename(filename))
+    fs.link(filename, linkname, (err) => {
       if (err) {
-        console.log(err)
+        console.log({ err }, 'Could not add file')
+        return
       }
 
-      if (linkedFiles.length > 0) {
-        dispatch(addFile(linkedFiles))
-      }
+      Taggable.create({ path: linkname }, { raw: true })
+        .then((taggable) => dispatch(addTaggable(taggable)))
     })
   })
 }

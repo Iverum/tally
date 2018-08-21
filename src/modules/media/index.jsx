@@ -3,10 +3,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { addFiles, getAllMedia } from './actions'
+import { addMedia, getAllMedia } from './actions'
 import Grid from './components/grid'
 
-class Files extends React.PureComponent {
+class Media extends React.PureComponent {
   componentWillMount() {
     this.props.actions.getAllMedia()
   }
@@ -16,11 +16,11 @@ class Files extends React.PureComponent {
       <div>
         <button
           className="btn btn-large btn-positive"
-          onClick={this.props.actions.addFiles}
+          onClick={this.props.actions.addMedia}
         >
           + Add Media
         </button>
-        <Grid files={this.props.media} />
+        <Grid media={this.props.media} />
       </div>
     )
   }
@@ -31,15 +31,15 @@ const mapStateToProps = state => ({
 })
 
 const mapActionsToDispatch = dispatch => ({
-  actions: bindActionCreators({ addFiles, getAllMedia }, dispatch)
+  actions: bindActionCreators({ addMedia, getAllMedia }, dispatch)
 })
 
-Files.propTypes = {
+Media.propTypes = {
   actions: PropTypes.shape({
-    addFiles: PropTypes.func.isRequired,
+    addMedia: PropTypes.func.isRequired,
     getAllMedia: PropTypes.func.isRequired
   }).isRequired,
   media: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
-export default connect(mapStateToProps, mapActionsToDispatch)(Files)
+export default connect(mapStateToProps, mapActionsToDispatch)(Media)
