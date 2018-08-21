@@ -1,3 +1,5 @@
 import models from './models'
 
-export default models.sequelize
+const { sequelize, Taggable } = models
+
+export { sequelize as default, Taggable }
