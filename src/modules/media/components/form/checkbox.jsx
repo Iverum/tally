@@ -6,8 +6,9 @@ class ReversedCheckbox extends React.PureComponent {
     const { disabled, input, label, meta } = this.props
     return (
       <div className="checkbox">
-        <label>
+        <label htmlFor={input.name}>
           <input
+            id={input.name}
             disabled={disabled}
             onChange={() => input.onChange(!input.value)}
             type="checkbox"
@@ -23,6 +24,7 @@ class ReversedCheckbox extends React.PureComponent {
 ReversedCheckbox.propTypes = {
   disabled: PropTypes.bool,
   input: PropTypes.shape({
+    name: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.bool
   }).isRequired,

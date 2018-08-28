@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
@@ -56,6 +57,13 @@ class NewMedia extends React.PureComponent {
       </div>
     )
   }
+}
+
+NewMedia.propTypes = {
+  history: PropTypes.shape({
+    goBack: PropTypes.func.isRequired
+  }).isRequired,
+  submit: PropTypes.func.isRequired
 }
 
 function mapStateToProps() {

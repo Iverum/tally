@@ -28,12 +28,12 @@ class ImageSelector extends React.PureComponent {
     const { input, label, meta } = this.props
     return (
       <div className="form-group">
-        <img src={input.value} />
+        <img src={input.value} alt={input.value} />
         <button
           className="btn btn-default"
           onClick={this.selectFile}
         >
-            {label}
+          {label}
         </button>
         <br />
         {meta.touched && <span className="error">{meta.error}</span>}

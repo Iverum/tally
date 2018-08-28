@@ -6,8 +6,9 @@ class TextField extends React.PureComponent {
     const { disabled, input, label, meta } = this.props
     return (
       <div className="form-group">
-        <label>{label}</label>
+        <label htmlFor={input.name}>{label}</label>
         <input
+          id={input.name}
           className="form-control"
           disabled={disabled}
           onChange={input.onChange}
@@ -23,6 +24,7 @@ class TextField extends React.PureComponent {
 TextField.propTypes = {
   disabled: PropTypes.bool,
   input: PropTypes.shape({
+    name: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string
   }).isRequired,
