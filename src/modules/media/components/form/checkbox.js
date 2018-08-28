@@ -3,16 +3,18 @@ import React from 'react'
 
 class ReversedCheckbox extends React.PureComponent {
   render() {
+    const { disabled, input, label, meta } = this.props
     return (
       <div className="checkbox">
         <label>
           <input
-            disabled={this.props.disabled}
-            onChange={() => this.props.input.onChange(!this.props.input.value)}
+            disabled={disabled}
+            onChange={() => input.onChange(!input.value)}
             type="checkbox"
-            checked={!this.props.input.value}
-          /> {this.props.label}
+            checked={!input.value}
+          /> {label}
         </label>
+        {meta.touched && <span className="error">{meta.error}</span>}
       </div>
     )
   }
@@ -24,7 +26,11 @@ ReversedCheckbox.propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.bool
   }).isRequired,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  meta: PropTypes.shape({
+    error: PropTypes.string,
+    touched: PropTypes.bool.isRequired
+  }).isRequired
 }
 
 ReversedCheckbox.defaultProps = {

@@ -14,3 +14,8 @@
   width: 33.3%;
   height: auto;
 }
+
+span.error {
+  color: #C70039;
+  font-size: .8em;
+}

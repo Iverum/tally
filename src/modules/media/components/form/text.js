@@ -3,16 +3,18 @@ import React from 'react'
 
 class TextField extends React.PureComponent {
   render() {
+    const { disabled, input, label, meta } = this.props
     return (
       <div className="form-group">
-        <label>{this.props.label}</label>
+        <label>{label}</label>
         <input
           className="form-control"
-          disabled={this.props.disabled}
-          onChange={this.props.input.onChange}
+          disabled={disabled}
+          onChange={input.onChange}
           type="text"
-          value={this.props.input.value}
+          value={input.value}
         />
+        {meta.touched && <span className="error">{meta.error}</span>}
       </div>
     )
   }
@@ -24,7 +26,11 @@ TextField.propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string
   }).isRequired,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  meta: PropTypes.shape({
+    error: PropTypes.string,
+    touched: PropTypes.bool.isRequired
+  }).isRequired
 }
 
 TextField.defaultProps = {

@@ -25,15 +25,18 @@ class ImageSelector extends React.PureComponent {
   }
 
   render() {
+    const { input, label, meta } = this.props
     return (
       <div className="form-group">
-        <img src={this.props.input.value} />
+        <img src={input.value} />
         <button
           className="btn btn-default"
           onClick={this.selectFile}
         >
-            {this.props.label}
+            {label}
         </button>
+        <br />
+        {meta.touched && <span className="error">{meta.error}</span>}
       </div>
     )
   }
@@ -44,7 +47,11 @@ ImageSelector.propTypes = {
   input: PropTypes.shape({
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string
-  })
+  }).isRequired,
+  meta: PropTypes.shape({
+    error: PropTypes.string,
+    touched: PropTypes.bool.isRequired
+  }).isRequired
 }
 
 export default ImageSelector

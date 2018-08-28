@@ -6,6 +6,7 @@ import CancelButton from './components/form/cancel'
 import Checkbox from './components/form/checkbox'
 import ImageSelector from './components/form/image'
 import TextField from './components/form/text'
+import { validate } from './util'
 
 class NewMedia extends React.PureComponent {
   constructor(props) {
@@ -44,7 +45,13 @@ class NewMedia extends React.PureComponent {
         />
         <div className="form-actions">
           <CancelButton onClick={this.goBack} />
-          <button type="submit" className="btn btn-form btn-primary">OK</button>
+          <button
+            className="btn btn-form btn-primary"
+            onClick={this.props.submit}
+            type="submit"
+          >
+            OK
+          </button>
         </div>
       </div>
     )
@@ -54,10 +61,14 @@ class NewMedia extends React.PureComponent {
 function mapStateToProps() {
   return {
     initialValues: {
+      path: null,
       source: null,
       safe: true
-    }
+    },
+    onSubmit: values => console.log({ values }) // TODO make into action
   }
 }
 
-export default connect(mapStateToProps)(reduxForm({ form: 'newMedia' })(NewMedia))
+export default connect(mapStateToProps)(
+  reduxForm({ form: 'newMedia', validate })(NewMedia)
+)
