@@ -1,16 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 
+import CancelButton from './components/form/cancel'
+import Checkbox from './components/form/checkbox'
+import ImageSelector from './components/form/image'
 import TextField from './components/form/text'
-
-const CancelButton = ({ onClick }) => (
-  <button
-    className="btn btn-form btn-default"
-    onClick={onClick}
-  >
-    Cancel
-  </button>
-)
 
 class NewMedia extends React.PureComponent {
   constructor(props) {
@@ -26,10 +21,11 @@ class NewMedia extends React.PureComponent {
     return (
       <div>
         <h3>Add New Media</h3>
-        <div className="form-group">
-          <img src={undefined} />
-          <button className="btn btn-default">Select File</button>
-        </div>
+        <Field
+          component={ImageSelector}
+          name="path"
+          label="Select File"
+        />
         <Field
           component={TextField}
           name="source"
@@ -41,11 +37,11 @@ class NewMedia extends React.PureComponent {
           name="tags"
           label="Tags"
         />
-        <div className="checkbox">
-          <label>
-            <input type="checkbox" /> NSFW
-          </label>
-        </div>
+        <Field
+          component={Checkbox}
+          name="safe"
+          label="NSFW"
+        />
         <div className="form-actions">
           <CancelButton onClick={this.goBack} />
           <button type="submit" className="btn btn-form btn-primary">OK</button>
@@ -55,4 +51,13 @@ class NewMedia extends React.PureComponent {
   }
 }
 
-export default reduxForm({ form: 'newMedia' })(NewMedia)
+function mapStateToProps() {
+  return {
+    initialValues: {
+      source: null,
+      safe: true
+    }
+  }
+}
+
+export default connect(mapStateToProps)(reduxForm({ form: 'newMedia' })(NewMedia))
