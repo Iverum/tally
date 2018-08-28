@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { Field, reduxForm } from 'redux-form'
 
+import { createTaggable } from './actions'
 import CancelButton from './components/form/cancel'
 import Checkbox from './components/form/checkbox'
 import ImageSelector from './components/form/image'
@@ -66,17 +68,23 @@ NewMedia.propTypes = {
   submit: PropTypes.func.isRequired
 }
 
-function mapStateToProps() {
+function mapStateToProps(state, ownProps) {
   return {
     initialValues: {
       path: null,
       source: null,
       safe: true
     },
-    onSubmit: values => console.log({ values }) // TODO make into action
+    onSubmitSuccess: ownProps.history.goBack
   }
 }
 
-export default connect(mapStateToProps)(
+function mapDispatchToProps(dispatch) {
+  return {
+    onSubmit: bindActionCreators(createTaggable, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
   reduxForm({ form: 'newMedia', validate })(NewMedia)
 )
