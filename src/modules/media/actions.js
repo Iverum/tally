@@ -1,4 +1,5 @@
 import fs from 'fs'
+import md5File from 'md5-file'
 import path from 'path'
 
 import { Taggable } from '../../database'
@@ -17,13 +18,20 @@ export const getAllMedia = () => dispatch => Taggable.findAll({ raw: true })
 export const createTaggable = (values) => (dispatch) => {
   if (!values.path) throw new Error('No path to media found')
 
-  const linkname = path.join(TAGGABLES_DIR, path.basename(values.path))
+  const extension = path.extname(values.path)
   return new Promise((resolve, reject) => {
-    fs.link(values.path, linkname, (err) => {
-      if (err) {
-        reject(err)
-      }
+    // First we want to get the checksum of the file
+    md5File(values.path, (err, hash) => {
+      if (err) reject(err)
 
+      // Create the link name using the hash
+      const linkname = `${path.join(TAGGABLES_DIR, hash)}${extension}`
+      // Link the file
+      fs.link(values.path, linkname, (err) => {
+        if (err) reject(err)
+      })
+
+      // Create the database entry
       const taggable = Object.assign({}, values, { path: linkname })
       Taggable.create(taggable, { raw: true })
         .then(t => {
