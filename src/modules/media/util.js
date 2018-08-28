@@ -1,4 +1,4 @@
-export const validate = (values) => {
+export const validate = (values) => { // TODO tests!
   const errors = {}
 
   // path
