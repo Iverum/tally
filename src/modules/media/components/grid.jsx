@@ -1,17 +1,18 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 class MediaGrid extends React.PureComponent {
   render() {
     return (
       <div className="grid">
         {this.props.media.map(taggable => (
-          <img
-            alt="TODO" // TODO replace this with meaningful tag data
-            key={taggable.id}
-            src={taggable.path}
-            onClick={() => console.log('CLICKED', { taggable })}
-          />
+          <Link key={taggable.id} to={`/${taggable.id}`}>
+            <img
+              alt="TODO" // TODO replace this with meaningful tag data
+              src={taggable.path}
+            />
+          </Link>
         ))}
       </div>
     )
