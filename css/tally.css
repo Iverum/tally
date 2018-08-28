@@ -11,8 +11,21 @@
 }
 
 .grid img {
-  width: 33.3%;
+  background-color: white;
+  border: 1px solid #124E78;
   height: auto;
+  margin: 2px;
+  padding: 1px;
+  width: 30%;
+}
+
+.form-group img {
+  border: 1px solid #124E78;
+  display: block;
+  height: auto;
+  min-height: 5em;
+  padding: 1px;
+  width: 100%;
 }
 
 span.error {
