@@ -10,6 +10,7 @@ class MediaGrid extends React.PureComponent {
             alt="TODO" // TODO replace this with meaningful tag data
             key={taggable.id}
             src={taggable.path}
+            onClick={() => console.log('CLICKED', { taggable })}
           />
         ))}
       </div>
