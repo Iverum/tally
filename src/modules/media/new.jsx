@@ -1,4 +1,7 @@
 import React from 'react'
+import { Field, reduxForm } from 'redux-form'
+
+import TextField from './components/form/text'
 
 const CancelButton = ({ onClick }) => (
   <button
@@ -27,20 +30,17 @@ class NewMedia extends React.PureComponent {
           <img src={undefined} />
           <button className="btn btn-default">Select File</button>
         </div>
-        <div className="form-group">
-          <label>Source</label>
-          <input
-            className="form-control"
-            type="text"
-          />
-        </div>
-        <div className="form-group">
-          <label>Tags</label>
-          <input
-            className="form-control"
-            type="text"
-          />
-        </div>
+        <Field
+          component={TextField}
+          name="source"
+          label="Source"
+        />
+        <Field
+          component={TextField}
+          disabled
+          name="tags"
+          label="Tags"
+        />
         <div className="checkbox">
           <label>
             <input type="checkbox" /> NSFW
@@ -55,4 +55,4 @@ class NewMedia extends React.PureComponent {
   }
 }
 
-export default NewMedia
+export default reduxForm({ form: 'newMedia' })(NewMedia)

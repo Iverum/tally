@@ -10,7 +10,8 @@ const db = {}
 
 const sequelize = new Sequelize('tally', 'tallyu', null, {
   dialect: 'sqlite',
-  storage: DATABASE_PATH
+  storage: DATABASE_PATH,
+  operatorsAliases: false
 })
 
 fs.readdirSync(__dirname)

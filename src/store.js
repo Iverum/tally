@@ -1,4 +1,5 @@
 import { applyMiddleware, createStore, combineReducers } from 'redux'
+import { reducer as formReducer } from 'redux-form'
 import thunk from 'redux-thunk'
 
 import database from './database/dux'
@@ -9,6 +10,7 @@ let store = null
 function createRootReducer() {
   return combineReducers({
     database,
+    form: formReducer,
     media
   })
 }
