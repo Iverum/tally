@@ -1,26 +1,30 @@
 export default (sequelize, DataTypes) => {
   const Taggable = sequelize.define('Taggable', {
     id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
+      allowNull: false,
       autoIncrement: true,
-      unique: true,
-      allowNull: false
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+      unique: true
     },
     path: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    source: {
-      type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false,
+      type: DataTypes.STRING
     },
     safe: {
-      type: DataTypes.BOOLEAN,
+      allowNull: false,
       defaultValue: true,
-      allowNull: false
+      type: DataTypes.BOOLEAN
+    },
+    source: {
+      allowNull: true,
+      type: DataTypes.STRING
     }
   })
+
+  Taggable.associate = function associate(models) {
+    Taggable.belongsToMany(models.Tag, { through: 'ItemTag' })
+  }
 
   return Taggable
 }

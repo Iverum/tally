@@ -15,7 +15,7 @@ export const getAllMedia = () => dispatch => Taggable.findAll({ raw: true })
     console.log({ err }, 'An error ocurred fetching taggable files')
   })
 
-export const createTaggable = (values) => (dispatch) => {
+export const createTaggable = values => (dispatch) => {
   if (!values.path) throw new Error('No path to media found')
 
   const extension = path.extname(values.path)
@@ -27,14 +27,14 @@ export const createTaggable = (values) => (dispatch) => {
       // Create the link name using the hash
       const linkname = `${path.join(TAGGABLES_DIR, hash)}${extension}`
       // Link the file
-      fs.link(values.path, linkname, (err) => {
+      fs.link(values.path, linkname, (e) => {
         if (err) reject(err)
       })
 
       // Create the database entry
       const taggable = Object.assign({}, values, { path: linkname })
       Taggable.create(taggable, { raw: true })
-        .then(t => {
+        .then((t) => {
           dispatch(addTaggable(t))
           resolve(t)
         })

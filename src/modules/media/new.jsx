@@ -27,24 +27,23 @@ class NewMedia extends React.PureComponent {
         <h3>Add New Media</h3>
         <Field
           component={ImageSelector}
-          name="path"
           label="Select File"
+          name="path"
         />
         <Field
           component={TextField}
-          name="source"
           label="Source"
+          name="source"
         />
         <Field
           component={TextField}
-          disabled
-          name="tags"
           label="Tags"
+          name="tags"
         />
         <Field
           component={Checkbox}
-          name="safe"
           label="NSFW"
+          name="safe"
         />
         <div className="form-actions">
           <CancelButton onClick={this.goBack} />
@@ -72,8 +71,8 @@ function mapStateToProps(state, ownProps) {
   return {
     initialValues: {
       path: null,
-      source: null,
-      safe: true
+      safe: true,
+      source: null
     },
     onSubmitSuccess: ownProps.history.goBack
   }
