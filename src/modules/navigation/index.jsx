@@ -5,7 +5,6 @@ import { MemoryRouter as Router } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 
 import { initialize } from '../../database/actions'
-import Drawer from './components/drawer'
 import LoadingIndicator from './components/loading'
 
 class Navigation extends React.PureComponent {
@@ -23,7 +22,6 @@ class Navigation extends React.PureComponent {
         <div className="window">
           <div className="window-content">
             <div className="pane-group">
-              <Drawer />
               <div className="pane">
                 {this.props.children}
               </div>
