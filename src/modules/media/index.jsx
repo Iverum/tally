@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 
 import { getAllMedia } from './actions'
 import Grid from './components/grid'
+import TagList from './components/tag-list'
 
 class Media extends React.PureComponent {
   componentWillMount() {
@@ -14,8 +15,8 @@ class Media extends React.PureComponent {
 
   render() {
     return (
-      <div>
-        <Link to="/new"><button className="btn btn-large btn-positive">+ Add Media</button></Link>
+      <div className="pane-group">
+        <TagList tags={this.props.tags} />
         <Grid media={this.props.media} />
       </div>
     )
@@ -23,7 +24,8 @@ class Media extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  media: Object.values(state.media.taggables)
+  media: Object.values(state.media.taggables),
+  tags: Object.values(state.media.tags)
 })
 
 const mapActionsToDispatch = dispatch => ({
@@ -34,7 +36,15 @@ Media.propTypes = {
   actions: PropTypes.shape({
     getAllMedia: PropTypes.func.isRequired
   }).isRequired,
-  media: PropTypes.arrayOf(PropTypes.object).isRequired
+  media: PropTypes.arrayOf(PropTypes.object),
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired
+  }))
+}
+
+Media.defaultProps = {
+  media: [],
+  tags: []
 }
 
 export default connect(mapStateToProps, mapActionsToDispatch)(Media)

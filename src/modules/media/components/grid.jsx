@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 class MediaGrid extends React.PureComponent {
   render() {
     return (
-      <div className="grid">
+      <div className="grid pane">
         {this.props.media.map(taggable => (
           <Link key={taggable.id} to={`/${taggable.id}`}>
             <img
