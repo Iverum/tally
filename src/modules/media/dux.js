@@ -1,3 +1,4 @@
+import flatten from 'lodash/flatten'
 import isArray from 'lodash/isArray'
 
 // ACTION TYPES
@@ -23,13 +24,17 @@ function mapById(media = []) {
 }
 
 function reduceAddFile(state = initialState, action) {
-  // TODO handle deduplication
   if (isArray(action.media)) {
-    const mappedMedia = mapById(action.media)
-    return Object.assign({}, state, { taggables: mappedMedia })
+    const taggables = mapById(action.media)
+    const tags = mapById(flatten(action.media.map(m => m.tags)))
+    return Object.assign({}, state, { taggables, tags })
   }
 
-  return Object.assign({}, state, { taggables: { [action.media.id]: action.media } })
+  const tags = mapById(action.media.tags)
+  return Object.assign({}, state, {
+    taggables: { [action.media.id]: action.media },
+    tags: Object.assign({}, state.media.tags, tags)
+  })
 }
 
 export default (state = initialState, action) => {

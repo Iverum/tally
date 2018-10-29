@@ -26,10 +26,13 @@ class Media extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  media: selectMedia(state),
-  tags: selectTags(state)
-})
+const mapStateToProps = (state) => {
+  console.log(state)
+  return {
+    media: selectMedia(state),
+    tags: selectTags(state)
+  }
+}
 
 const mapActionsToDispatch = dispatch => ({
   actions: bindActionCreators({ getAllMedia }, dispatch)
