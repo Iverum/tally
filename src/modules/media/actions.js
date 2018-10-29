@@ -2,17 +2,19 @@ import fs from 'fs'
 import md5File from 'md5-file'
 import path from 'path'
 
-import { Taggable } from '../../database'
+import { Tag, Taggable } from '../../database'
 import { TAGGABLES_DIR } from './constants'
-import { addMedia as addTaggable } from './dux'
+import { addMedia as addTaggable, addTag } from './dux'
 
 /**
  * Gets all Taggables from the database and adds them to the Redux store.
  */
 export const getAllMedia = () => dispatch => Taggable.findAll({ raw: true })
   .then((taggables = []) => dispatch(addTaggable(taggables)))
+  .then(() => Tag.findAll({ raw: true }))
+  .then((tags = []) => dispatch(addTag(tags)))
   .catch((err) => {
-    console.log({ err }, 'An error ocurred fetching taggable files')
+    console.error({ err }, 'An error ocurred fetching media')
   })
 
 export const createTaggable = values => (dispatch) => {
@@ -28,12 +30,14 @@ export const createTaggable = values => (dispatch) => {
       const linkname = `${path.join(TAGGABLES_DIR, hash)}${extension}`
       // Link the file
       fs.link(values.path, linkname, (e) => {
-        if (err) reject(err)
+        if (e) reject(e)
       })
 
       // Create the database entry
-      const taggable = Object.assign({}, values, { path: linkname })
-      Taggable.create(taggable, { raw: true })
+      const tags = values.tags.split(',').map(tag => ({ name: tag.trim() }))
+      const taggable = Object.assign({}, values, { path: linkname, tags })
+      console.log({ taggable })
+      Taggable.create(taggable, { include: ['tags'], raw: true })
         .then((t) => {
           dispatch(addTaggable(t))
           resolve(t)

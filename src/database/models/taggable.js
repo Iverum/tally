@@ -23,7 +23,7 @@ export default (sequelize, DataTypes) => {
   })
 
   Taggable.associate = function associate(models) {
-    Taggable.belongsToMany(models.Tag, { through: 'ItemTag' })
+    Taggable.belongsToMany(models.Tag, { as: 'tags', through: 'ItemTag' })
   }
 
   return Taggable

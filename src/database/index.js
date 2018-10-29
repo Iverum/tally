@@ -1,5 +1,5 @@
 import models from './models'
 
-const { sequelize, Taggable } = models
+const { sequelize, Tag, Taggable } = models
 
-export { sequelize as default, Taggable }
+export { sequelize as default, Tag, Taggable }

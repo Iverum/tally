@@ -27,7 +27,7 @@ MediaView.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    taggable: state.media[ownProps.match.params.id]
+    taggable: state.media.taggables[ownProps.match.params.id]
   }
 }
 
