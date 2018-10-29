@@ -13,7 +13,7 @@ class TagList extends React.PureComponent {
               key={tag.name}
               className="nav-group-item"
             >
-              {tag.name}
+              {tag.name} {tag.count}
             </a>
           ))}
         </nav>
@@ -28,6 +28,7 @@ TagList.propTypes = {
     PropTypes.arrayOf(PropTypes.node)
   ]),
   tags: PropTypes.arrayOf(PropTypes.shape({
+    count: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired
   }))
 }

@@ -3,12 +3,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import TagList from './components/tag-list'
+import { selectMediaById, selectTagsWithCountByImage } from './selectors';
 
 class MediaView extends React.PureComponent {
   render() {
     return (
       <div className="pane-group">
-        <TagList tags={this.props.taggable.tags}>
+        <TagList tags={this.props.tags}>
           <button
             className="btn btn-large btn-default"
             onClick={this.props.history.goBack}
@@ -33,15 +34,18 @@ MediaView.propTypes = {
   }).isRequired,
   taggable: PropTypes.shape({
     path: PropTypes.string.isRequired,
-    tags: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string.isRequired
-    }))
-  }).isRequired
+  }).isRequired,
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    count: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired
+  })).isRequired
 }
 
 function mapStateToProps(state, ownProps) {
+  const queryProps = { id: ownProps.match.params.id }
   return {
-    taggable: state.media.taggables[ownProps.match.params.id]
+    taggable: selectMediaById(state, queryProps),
+    tags: Object.values(selectTagsWithCountByImage(state, queryProps))
   }
 }
 

@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { getAllMedia } from './actions'
 import Grid from './components/grid'
 import TagList from './components/tag-list'
-import { selectMedia, selectTags } from './selectors';
+import { selectMedia, selectTagsWithCounts } from './selectors';
 
 class Media extends React.PureComponent {
   componentWillMount() {
@@ -26,13 +26,10 @@ class Media extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log(state)
-  return {
-    media: selectMedia(state),
-    tags: selectTags(state)
-  }
-}
+const mapStateToProps = state => ({
+  media: Object.values(selectMedia(state)),
+  tags: Object.values(selectTagsWithCounts(state))
+})
 
 const mapActionsToDispatch = dispatch => ({
   actions: bindActionCreators({ getAllMedia }, dispatch)
