@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux'
 import { getAllMedia } from './actions'
 import Grid from './components/grid'
 import TagList from './components/tag-list'
+import { selectMedia, selectTags } from './selectors';
 
 class Media extends React.PureComponent {
   componentWillMount() {
@@ -25,18 +26,10 @@ class Media extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
-  const media = Object.values(state.media.taggables)
-  const tags = media.reduce((accumulatedTags, taggable) => {
-    accumulatedTags.push(...taggable.tags)
-    return accumulatedTags
-  }, [])
-
-  return {
-    media,
-    tags
-  }
-}
+const mapStateToProps = state => ({
+  media: selectMedia(state),
+  tags: selectTags(state)
+})
 
 const mapActionsToDispatch = dispatch => ({
   actions: bindActionCreators({ getAllMedia }, dispatch)
