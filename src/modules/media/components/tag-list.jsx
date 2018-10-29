@@ -23,12 +23,17 @@ class TagList extends React.PureComponent {
 }
 
 TagList.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node)
+  ]),
   tags: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired
   }))
 }
 
 TagList.defaultProps = {
+  children: null,
   tags: []
 }
 

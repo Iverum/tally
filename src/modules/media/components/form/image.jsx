@@ -1,14 +1,19 @@
 import { remote } from 'electron'
+import path from 'path'
 import PropTypes from 'prop-types'
 import React from 'react'
 
 const { app, dialog } = remote
-const picturesPath = app.getPath('pictures') // TODO use recent files
-const dialogOptions = {
-  title: 'Add File',
-  defaultPath: picturesPath,
-  filters: [{ name: 'Images', extensions: ['jpg', 'png', 'gif'] }],
-  properties: ['openFile']
+const picturesPath = app.getPath('pictures')
+let lastPath
+
+function dialogOptions() {
+  return {
+    defaultPath: lastPath || picturesPath,
+    filters: [{ extensions: ['jpg', 'png', 'gif'], name: 'Images' }],
+    properties: ['openFile'],
+    title: 'Add File'
+  }
 }
 
 class ImageSelector extends React.PureComponent {
@@ -18,8 +23,9 @@ class ImageSelector extends React.PureComponent {
   }
 
   selectFile() {
-    dialog.showOpenDialog(remote.getCurrentWindow(), dialogOptions, (filepaths) => {
+    dialog.showOpenDialog(remote.getCurrentWindow(), dialogOptions(), (filepaths) => {
       if (!filepaths) return
+      lastPath = path.dirname(filepaths[0])
       this.props.input.onChange(filepaths[0])
     })
   }
@@ -28,7 +34,7 @@ class ImageSelector extends React.PureComponent {
     const { input, label, meta } = this.props
     return (
       <div className="form-group">
-        <img src={input.value} alt={input.value} />
+        <img alt={input.value} src={input.value} />
         <button
           className="btn btn-default"
           onClick={this.selectFile}
@@ -43,11 +49,11 @@ class ImageSelector extends React.PureComponent {
 }
 
 ImageSelector.propTypes = {
-  label: PropTypes.string.isRequired,
   input: PropTypes.shape({
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string
   }).isRequired,
+  label: PropTypes.string.isRequired,
   meta: PropTypes.shape({
     error: PropTypes.string,
     touched: PropTypes.bool.isRequired

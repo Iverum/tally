@@ -9,7 +9,12 @@ class MediaView extends React.PureComponent {
     return (
       <div className="pane-group">
         <TagList tags={this.props.taggable.tags}>
-          <button className="btn btn-large btn-default" onClick={this.props.history.goBack}>Back</button>
+          <button
+            className="btn btn-large btn-default"
+            onClick={this.props.history.goBack}
+          >
+            Back
+          </button>
         </TagList>
         <div className="pane">
           <img
