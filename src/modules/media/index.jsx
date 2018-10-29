@@ -16,17 +16,27 @@ class Media extends React.PureComponent {
   render() {
     return (
       <div className="pane-group">
-        <TagList tags={this.props.tags} />
+        <TagList tags={this.props.tags}>
+          <Link to="/new"><button className="btn btn-large btn-positive">+ Add Media</button></Link>
+        </TagList>
         <Grid media={this.props.media} />
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  media: Object.values(state.media.taggables),
-  tags: Object.values(state.media.tags)
-})
+const mapStateToProps = (state) => {
+  const media = Object.values(state.media.taggables)
+  const tags = media.reduce((accumulatedTags, taggable) => {
+    accumulatedTags.push(...taggable.tags)
+    return accumulatedTags
+  }, [])
+
+  return {
+    media,
+    tags
+  }
+}
 
 const mapActionsToDispatch = dispatch => ({
   actions: bindActionCreators({ getAllMedia }, dispatch)

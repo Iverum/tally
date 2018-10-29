@@ -10,11 +10,6 @@ export const addMedia = taggable => ({
   type: ADD_TAGGABLE
 })
 
-export const addTag = tag => ({
-  tag,
-  type: ADD_TAG
-})
-
 // REDUCER
 const initialState = {
   taggables: {},
@@ -37,23 +32,10 @@ function reduceAddFile(state = initialState, action) {
   return Object.assign({}, state, { taggables: { [action.media.id]: action.media } })
 }
 
-function reduceAddTag(state = initialState, action) {
-  if (isArray(action.tag)) {
-    const mappedTags = mapById(action.tag)
-    return Object.assign({}, state, { tags: mappedTags })
-  }
-
-  return Object.assign({}, state, { tags: { [action.tag.id]: action.tag } })
-}
-
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_TAGGABLE: {
       return reduceAddFile(state, action)
-    }
-
-    case ADD_TAG: {
-      return reduceAddTag(state, action)
     }
 
     default:

@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 class TagList extends React.PureComponent {
   render() {
     return (
       <div className="pane-sm sidebar">
-        <Link to="/new"><button className="btn btn-large btn-positive">+ Add Media</button></Link>
+        {this.props.children}
         <nav className="nav-group">
           <h5 className="nav-group-title">Tags</h5>
           {this.props.tags.map(tag => (

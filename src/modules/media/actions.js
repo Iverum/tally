@@ -4,15 +4,21 @@ import path from 'path'
 
 import { Tag, Taggable } from '../../database'
 import { TAGGABLES_DIR } from './constants'
-import { addMedia as addTaggable, addTag } from './dux'
+import { addMedia as addTaggable } from './dux'
 
 /**
  * Gets all Taggables from the database and adds them to the Redux store.
  */
-export const getAllMedia = () => dispatch => Taggable.findAll({ raw: true })
-  .then((taggables = []) => dispatch(addTaggable(taggables)))
-  .then(() => Tag.findAll({ raw: true }))
-  .then((tags = []) => dispatch(addTag(tags)))
+export const getAllMedia = () => dispatch => Taggable.findAll({
+  include: [{
+    as: 'tags',
+    model: Tag
+  }]
+})
+  .then((taggables = []) => {
+    console.log({ taggables })
+    dispatch(addTaggable(taggables))
+  })
   .catch((err) => {
     console.error({ err }, 'An error ocurred fetching media')
   })
@@ -36,8 +42,7 @@ export const createTaggable = values => (dispatch) => {
       // Create the database entry
       const tags = values.tags.split(',').map(tag => ({ name: tag.trim() }))
       const taggable = Object.assign({}, values, { path: linkname, tags })
-      console.log({ taggable })
-      Taggable.create(taggable, { include: ['tags'], raw: true })
+      Taggable.create(taggable, { include: ['tags'] })
         .then((t) => {
           dispatch(addTaggable(t))
           resolve(t)
