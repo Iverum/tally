@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux'
 import { getAllMedia } from './actions'
 import Grid from './components/grid'
 import TagList from './components/tag-list'
+import { addSearchTerm, removeSearchTerm } from './dux';
 import { selectMediaWithTags, selectSearchedTags, selectTags } from './selectors';
 
 class Media extends React.PureComponent {
@@ -17,7 +18,12 @@ class Media extends React.PureComponent {
   render() {
     return (
       <div className="pane-group">
-        <TagList searchedTags={this.props.searchedTags} tags={this.props.tags}>
+        <TagList
+          onSearchedTagClick={this.props.actions.removeSearchTerm}
+          onTagClick={this.props.actions.addSearchTerm}
+          searchedTags={this.props.searchedTags}
+          tags={this.props.tags}
+        >
           <div className="tag-list-header">
             <Link to="/new"><button className="btn btn-large btn-positive">
               + Add Media
@@ -37,12 +43,14 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapActionsToDispatch = dispatch => ({
-  actions: bindActionCreators({ getAllMedia }, dispatch)
+  actions: bindActionCreators({ addSearchTerm, getAllMedia, removeSearchTerm }, dispatch)
 })
 
 Media.propTypes = {
   actions: PropTypes.shape({
-    getAllMedia: PropTypes.func.isRequired
+    addSearchTerm: PropTypes.func.isRequired,
+    getAllMedia: PropTypes.func.isRequired,
+    removeSearchTerm: PropTypes.func.isRequired
   }).isRequired,
   location: PropTypes.shape({ search: PropTypes.string.isRequired }).isRequired,
   media: PropTypes.arrayOf(PropTypes.object),

@@ -15,38 +15,23 @@ export const selectTagsWithCountByImage = createSelector(
   )
 )
 
-const selectSearchedTagNames = (state, props) => {
-  const { search } = props.location
-  if (isEmpty(search)) { return [] }
-
-  const searchQueries = search.substring(1).split('=')
-  const tagsIndex = searchQueries.indexOf('tags')
-  if (tagsIndex < 0) { return [] }
-
-  return searchQueries[tagsIndex + 1].split(',')
-}
-
 export const selectSearchedTags = createSelector(
-  [selectTags, selectSearchedTagNames],
-  (tags, searchedTagNames) => searchedTagNames.reduce((searchedTags, name) => {
-    const foundTag = tags.find(t => t.name === name)
-    if (!foundTag) return searchedTags
-    return [...searchedTags, foundTag]
-  }, [])
+  [state => state.media.tags.byId, state => state.media.searchedTagIds],
+  (tags, searchedTagIds) => searchedTagIds.map(id => tags[id])
 )
 
 export const selectMediaWithTags = createSelector(
   [
-    selectSearchedTags,
+    state => state.media.searchedTagIds,
     state => state.media.taggables.byId,
     state => Object.values(state.media.taggableTags.byId)
   ],
-  (searchedTags, taggables, join) => {
-    if (isEmpty(searchedTags)) {
+  (searchedTagIds, taggables, join) => {
+    if (isEmpty(searchedTagIds)) {
       return Object.values(taggables)
     }
 
-    return join.filter(j => searchedTags.some(t => t.id === j.tagId))
+    return join.filter(j => searchedTagIds.some(id => id === j.tagId))
       .reduce((results, current) => [...results, taggables[current.taggableId]], [])
   }
 )

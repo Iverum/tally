@@ -2,7 +2,10 @@ import isArray from 'lodash/isArray'
 
 // ACTION TYPES
 export const ADD_TAGGABLE = 'tally/media/ADD_TAGGABLE'
-export const ADD_TAG = 'tally/media/ADD_TAG'
+export const ADD_SEARCH = 'tally/media/ADD_SEARCH_TERM'
+export const REMOVE_SEARCH = 'tally/media/REMOVE_SEARCH_TERM'
+export const CLEAR_SEARCH = 'tally/media/CLEAR_SEARCH'
+
 
 // ACTION CREATORS
 export const addMedia = taggable => ({
@@ -10,8 +13,21 @@ export const addMedia = taggable => ({
   type: ADD_TAGGABLE
 })
 
+export const addSearchTerm = tagId => ({
+  tagId,
+  type: ADD_SEARCH
+})
+
+export const removeSearchTerm = tagId => ({
+  tagId,
+  type: REMOVE_SEARCH
+})
+
+export const clearSearch = () => ({ type: REMOVE_SEARCH })
+
 // REDUCER
 const initialState = {
+  searchedTagIds: [],
   taggables: {
     allIds: [],
     byId: {}
@@ -74,10 +90,36 @@ function reduceAddFile(state = initialState, action) {
   return Object.assign({}, state, reducedState)
 }
 
+function reduceAddSearchTerm(state = initialState, action) {
+  return Object.assign({}, state, { searchedTagIds: [...state.searchedTagIds, action.tagId] })
+}
+
+function reduceRemoveSearchTerm(state = initialState, action) {
+  const searchTerms = [...state.searchedTagIds]
+  searchTerms.splice(searchTerms.indexOf(action.tagId), 1)
+  return Object.assign({}, state, { searchedTagIds: searchTerms })
+}
+
+function reduceClearSearch(state = initialState) {
+  return Object.assign({}, state, { searchedTagIds: [] })
+}
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_TAGGABLE: {
       return reduceAddFile(state, action)
+    }
+
+    case ADD_SEARCH: {
+      return reduceAddSearchTerm(state, action)
+    }
+
+    case REMOVE_SEARCH: {
+      return reduceRemoveSearchTerm(state, action)
+    }
+
+    case CLEAR_SEARCH: {
+      return reduceClearSearch(state, action)
     }
 
     default:
