@@ -34,3 +34,19 @@ export const selectSearchedTags = createSelector(
     return [...searchedTags, foundTag]
   }, [])
 )
+
+export const selectMediaWithTags = createSelector(
+  [
+    selectSearchedTags,
+    state => state.media.taggables.byId,
+    state => Object.values(state.media.taggableTags.byId)
+  ],
+  (searchedTags, taggables, join) => {
+    if (isEmpty(searchedTags)) {
+      return Object.values(taggables)
+    }
+
+    return join.filter(j => searchedTags.some(t => t.id === j.tagId))
+      .reduce((results, current) => [...results, taggables[current.taggableId]], [])
+  }
+)

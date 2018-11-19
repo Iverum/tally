@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { getAllMedia } from './actions'
 import Grid from './components/grid'
 import TagList from './components/tag-list'
-import { selectMedia, selectSearchedTags, selectTags } from './selectors';
+import { selectMediaWithTags, selectSearchedTags, selectTags } from './selectors';
 
 class Media extends React.PureComponent {
   componentWillMount() {
@@ -31,7 +31,7 @@ class Media extends React.PureComponent {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  media: Object.values(selectMedia(state)),
+  media: Object.values(selectMediaWithTags(state, ownProps)),
   searchedTags: selectSearchedTags(state, ownProps),
   tags: Object.values(selectTags(state))
 })
