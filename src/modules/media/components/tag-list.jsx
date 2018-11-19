@@ -3,18 +3,28 @@ import noop from 'lodash/noop'
 import PropTypes from 'prop-types'
 import React from 'react'
 
+const Tag = ({ onTagClick, tag }) => (
+  <a
+    className="nav-group-item"
+    onClick={() => onTagClick(tag.id)}
+    role="button"
+    tabIndex={0}
+  >
+    {tag.name} {tag.count}
+  </a>
+)
+Tag.propTypes = {
+  onTagClick: PropTypes.func.isRequired,
+  tag: PropTypes.shape({
+    count: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired
+  }).isRequired
+}
+
 const SearchedTags = props => (
   <div>
     <h5 className="nav-group-title">Searched Tags</h5>
-    {props.tags.map(tag => (
-      <a
-        className="nav-group-item"
-        key={`search_${tag.name}`}
-        onClick={() => props.onTagClick(tag.id)}
-      >
-        {tag.name} {tag.count}
-      </a>
-    ))}
+    {props.tags.map(tag => <Tag key={`search_${tag.name}`} onTagClick={props.onTagClick} tag={tag} />)}
   </div>
 )
 SearchedTags.propTypes = {
@@ -29,17 +39,10 @@ const TagList = props => (
   <div className="pane-sm sidebar">
     {props.children}
     <nav className="nav-group">
-      {!isEmpty(props.searchedTags) && <SearchedTags onTagClick={props.onSearchedTagClick} tags={props.searchedTags} />}
-      <h5 className="nav-group-title">Tags</h5>
-      {props.tags.map(tag => (
-        <a
-          className="nav-group-item"
-          key={`list_${tag.name}`}
-          onClick={() => props.onTagClick(tag.id)}
-        >
-          {tag.name} {tag.count}
-        </a>
-      ))}
+      {!isEmpty(props.searchedTags) &&
+        <SearchedTags onTagClick={props.onSearchedTagClick} tags={props.searchedTags} />}
+      <h5 className="nav-group-title">All Tags</h5>
+      {props.tags.map(tag => <Tag key={`list_${tag.name}`} onTagClick={props.onTagClick} tag={tag} />)}
     </nav>
   </div>
 )
