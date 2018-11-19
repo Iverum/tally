@@ -1,3 +1,4 @@
+import isEmpty from "lodash/isEmpty";
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -14,11 +15,26 @@ class Media extends React.PureComponent {
     this.props.actions.getAllMedia()
   }
 
+  getSearchedTags() {
+    const { search } = this.props.location
+    if (isEmpty(search)) { return [] }
+
+    const searchQueries = search.substring(1).split('=')
+    const tagsIndex = searchQueries.indexOf('tags')
+    if (tagsIndex < 0) { return [] }
+
+    return searchQueries[tagsIndex + 1].split(',')
+  }
+
   render() {
     return (
       <div className="pane-group">
-        <TagList tags={this.props.tags}>
-          <Link to="/new"><button className="btn btn-large btn-positive">+ Add Media</button></Link>
+        <TagList searched={this.getSearchedTags()} tags={this.props.tags}>
+          <div className="tag-list-header">
+            <Link to="/new"><button className="btn btn-large btn-positive">
+              + Add Media
+            </button></Link>
+          </div>
         </TagList>
         <Grid media={this.props.media} />
       </div>

@@ -11,6 +11,15 @@
   text-align: left;
 }
 
+.tag-list-header {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.tag-list-header * {
+  margin-bottom: 0.35rem;
+}
+
 .grid {
   flex-direction: row;
   flex-wrap: wrap;
