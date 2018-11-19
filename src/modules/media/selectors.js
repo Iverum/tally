@@ -31,7 +31,9 @@ export const selectMediaWithTags = createSelector(
       return Object.values(taggables)
     }
 
-    return join.filter(j => searchedTagIds.some(id => id === j.tagId))
-      .reduce((results, current) => [...results, taggables[current.taggableId]], [])
+    return join.reduce(
+      (results, j) =>
+        (searchedTagIds.includes(j.tagId) ? [...results, taggables[j.taggableId]] : results),
+      [])
   }
 )
