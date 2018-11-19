@@ -16,6 +16,10 @@ const initialState = {
     allIds: [],
     byId: {}
   },
+  taggableTags: {
+    allIds: [],
+    byId: {}
+  },
   tags: {
     allIds: [],
     byId: {}
@@ -41,11 +45,23 @@ function reduceAddFile(state = initialState, action) {
         newState.tags.allIds.push(tag.id)
         newState.tags.byId[tag.id] = Object.assign(tag, { count: 1 })
       }
+
+      const taggableTag = {
+        id: newState.taggableTags.allIds.length + 1,
+        taggableId: media.id,
+        tagId: tag.id
+      }
+      newState.taggableTags.allIds.push(taggableTag.id)
+      newState.taggableTags.byId[taggableTag.id] = taggableTag
     })
 
     return newState;
   }, {
     taggables: {
+      allIds: [],
+      byId: {}
+    },
+    taggableTags: {
       allIds: [],
       byId: {}
     },
