@@ -1,21 +1,6 @@
-import isEmpty from "lodash/isEmpty"
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Link } from 'react-router-dom'
-
-const SearchedTags = props => (
-  <div>
-    <h5 className="nav-group-title">Searched Tags</h5>
-    {props.tags.map(tag => (
-      <a
-        className="nav-group-item"
-        key={tag}
-      >
-        {tag}
-      </a>
-    ))}
-  </div>
-)
 
 class TagList extends React.PureComponent {
   render() {
@@ -23,7 +8,6 @@ class TagList extends React.PureComponent {
       <div className="pane-sm sidebar">
         {this.props.children}
         <nav className="nav-group">
-          {!isEmpty(this.props.searched) && <SearchedTags tags={this.props.searched} />}
           <h5 className="nav-group-title">Tags</h5>
           {this.props.tags.map(tag => (
             <Link

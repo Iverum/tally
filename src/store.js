@@ -1,5 +1,6 @@
-import { applyMiddleware, createStore, combineReducers } from 'redux'
+import { applyMiddleware, combineReducers, createStore } from 'redux'
 import { reducer as formReducer } from 'redux-form'
+import logger from 'redux-logger'
 import thunk from 'redux-thunk'
 
 import database from './database/dux'
@@ -25,7 +26,7 @@ export default function configureStore(initialState = {}) {
   }
 
   if (store === null) {
-    store = createStore(createRootReducer(), initialState, applyMiddleware(thunk))
+    store = createStore(createRootReducer(), initialState, applyMiddleware(thunk, logger))
   }
 
   return store
