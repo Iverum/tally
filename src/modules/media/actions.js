@@ -7,7 +7,7 @@ import path from 'path'
 
 import { Tag, Taggable } from '../../database'
 import { TAGGABLES_DIR } from './constants'
-import { addMedia as addTaggable } from './dux'
+import { addMedia as addTaggable, addSearchTerm } from './dux'
 import { selectTags } from './selectors'
 
 /**
@@ -58,4 +58,14 @@ export const createTaggable = values => (dispatch, getState) => {
         })
     })
   })
+}
+
+export const searchForTag = searchTerm => (dispatch, getState) => {
+  const tags = selectTags(getState());
+  const searchedTag = tags.find(t => t.name === searchTerm)
+  if (!searchedTag) {
+    return Promise.resolve(false)
+  }
+
+  return Promise.resolve(dispatch(addSearchTerm(searchedTag.id)))
 }
