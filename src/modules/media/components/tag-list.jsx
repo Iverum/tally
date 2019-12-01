@@ -4,15 +4,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const Tag = ({ onTagClick, tag }) => (
-  <a
-    className="nav-group-item tag"
-    onClick={() => onTagClick(tag.id)}
-    onKeyPress={() => onTagClick(tag.id)}
-    role="button"
-    tabIndex={0}
-  >
+  <button className="nav-group-item tag" onClick={() => onTagClick(tag.id)}>
     {tag.name} {tag.count}
-  </a>
+  </button>
 );
 Tag.propTypes = {
   onTagClick: PropTypes.func.isRequired,

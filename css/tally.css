@@ -21,6 +21,19 @@
   margin-bottom: 0.35rem;
 }
 
+button.nav-group-item.tag {
+  text-align: left;
+  align-items: unset;
+  width: 100%;
+  background: none;
+  border: none;
+  margin: inherit;
+}
+
+button.nav-group-item.tag:hover {
+  background-color: #dcdfe1;
+}
+
 .nav-group-item.tag:focus {
   background-color: #9da5ab;
   outline: none;
