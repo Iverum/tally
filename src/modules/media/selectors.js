@@ -23,17 +23,14 @@ export const selectSearchedTags = createSelector(
 export const selectMediaWithTags = createSelector(
   [
     state => state.media.searchedTagIds,
+    state => state.media.searchResultIds,
     state => state.media.taggables.byId,
-    state => Object.values(state.media.taggableTags.byId)
   ],
-  (searchedTagIds, taggables, join) => {
-    if (isEmpty(searchedTagIds)) {
+  (searchedTags, searchResultIds, taggables) => {
+    if (isEmpty(searchedTags)) {
       return Object.values(taggables)
     }
 
-    return join.reduce(
-      (results, j) =>
-        (searchedTagIds.includes(j.tagId) ? [...results, taggables[j.taggableId]] : results),
-      [])
+    return searchResultIds.map(result => taggables[result]);
   }
 )
