@@ -1,12 +1,9 @@
 import isArray from 'lodash/isArray';
 
-import sequelize, { Taggable, Tag } from '../../database';
+import sequelize from '../../database';
 
 // ACTION TYPES
 export const ADD_TAGGABLE = 'tally/media/ADD_TAGGABLE';
-export const ADD_SEARCH = 'tally/media/ADD_SEARCH_TERM';
-export const REMOVE_SEARCH = 'tally/media/REMOVE_SEARCH_TERM';
-export const CLEAR_SEARCH = 'tally/media/CLEAR_SEARCH';
 export const SET_SEARCH = 'tally/media/SET_SEARCH';
 export const SET_SEARCH_RESULTS = 'tally/media/SET_SEARCH_RESULTS'
 
