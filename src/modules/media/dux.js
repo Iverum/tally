@@ -1,7 +1,6 @@
 import isArray from 'lodash/isArray';
-import { Op } from 'sequelize';
 
-import { Taggable, Tag } from '../../database';
+import sequelize, { Taggable, Tag } from '../../database';
 
 // ACTION TYPES
 export const ADD_TAGGABLE = 'tally/media/ADD_TAGGABLE';
@@ -11,17 +10,28 @@ export const CLEAR_SEARCH = 'tally/media/CLEAR_SEARCH';
 export const SET_SEARCH = 'tally/media/SET_SEARCH';
 export const SET_SEARCH_RESULTS = 'tally/media/SET_SEARCH_RESULTS'
 
+const SEARCH_QUERY = `
+  SELECT DISTINCT Taggables.id FROM Taggables
+  INNER JOIN ItemTag tag
+  WHERE Taggables.id = tag.TaggableId AND tag.TagId IN (:tagIds)
+  AND (
+    SELECT COUNT(ItemTag.TaggableId)
+    FROM ItemTag WHERE ItemTag.TagId IN (:tagIds)
+    AND Taggables.id = ItemTag.TaggableId
+  ) = :tagIdsLength
+`
+
 function getSearchResults(tagIds) {
-  return Taggable.findAll({
-    attributes: ['id'],
-    include: [{
-      as: 'tags',
-      model: Tag,
-      where: {
-        id: tagIds
-      }
-    }]
-  }).catch(console.error);
+  if (tagIds.length <= 0) {
+    return Promise.resolve([]);
+  }
+
+  return sequelize.query(SEARCH_QUERY,
+    {
+      replacements: { tagIds, tagIdsLength: tagIds.length },
+      type: sequelize.QueryTypes.SELECT
+    }
+  ).catch(console.error);
 }
 
 // ACTION CREATORS
