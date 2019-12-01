@@ -50,7 +50,7 @@ const TagList = props => (
           tags={props.searchedTags}
         />
       )}
-      <h5 className="nav-group-title">All Tags</h5>
+      <h5 className="nav-group-title">Tags</h5>
       {props.tags.map(tag => (
         <Tag key={`list_${tag.name}`} onTagClick={props.onTagClick} tag={tag} />
       ))}

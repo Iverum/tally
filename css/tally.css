@@ -5,6 +5,7 @@
 .pane-sm.sidebar {
   text-align: center;
   padding-top: 1em;
+  min-width: 220px;
 }
 
 .pane-sm.sidebar .nav-group {

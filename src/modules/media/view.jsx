@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import TagList from './components/tag-list'
+import TagList from './components/tag-list';
 import { addSearchTerm, clearSearch } from './dux';
 import { selectMediaById, selectTagsWithCountByImage } from './selectors';
 
@@ -12,10 +12,10 @@ class MediaView extends React.PureComponent {
     return (
       <div className="pane-group">
         <TagList
-          onTagClick={(tagId) => {
-            this.props.actions.clearSearch()
-            this.props.actions.addSearchTerm(tagId)
-            this.props.history.goBack()
+          onTagClick={tagId => {
+            this.props.actions.clearSearch();
+            this.props.actions.addSearchTerm(tagId);
+            this.props.history.goBack();
           }}
           tags={this.props.tags}
         >
@@ -30,10 +30,12 @@ class MediaView extends React.PureComponent {
           <img
             alt="TODO"
             src={this.props.taggable.path}
+            width="100%"
+            style={{ flex: 1 }}
           />
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -46,24 +48,29 @@ MediaView.propTypes = {
     goBack: PropTypes.func.isRequired
   }).isRequired,
   taggable: PropTypes.shape({
-    path: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired
   }).isRequired,
-  tags: PropTypes.arrayOf(PropTypes.shape({
-    count: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired
-  })).isRequired
-}
+  tags: PropTypes.arrayOf(
+    PropTypes.shape({
+      count: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired
+    })
+  ).isRequired
+};
 
 function mapStateToProps(state, ownProps) {
-  const queryProps = { id: ownProps.match.params.id }
+  const queryProps = { id: ownProps.match.params.id };
   return {
     taggable: selectMediaById(state, queryProps),
     tags: Object.values(selectTagsWithCountByImage(state, queryProps))
-  }
+  };
 }
 
 const mapActionsToDispatch = dispatch => ({
   actions: bindActionCreators({ addSearchTerm, clearSearch }, dispatch)
-})
+});
 
-export default connect(mapStateToProps, mapActionsToDispatch)(MediaView)
+export default connect(
+  mapStateToProps,
+  mapActionsToDispatch
+)(MediaView);
