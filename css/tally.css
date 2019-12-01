@@ -20,6 +20,11 @@
   margin-bottom: 0.35rem;
 }
 
+.nav-group-item.tag:focus {
+  background-color: #9da5ab;
+  outline: none;
+}
+
 .grid {
   flex-direction: row;
   flex-wrap: wrap;
@@ -29,7 +34,7 @@
 
 .grid img {
   background-color: white;
-  border: 1px solid #124E78;
+  border: 1px solid #124e78;
   cursor: pointer;
   height: auto;
   margin: 2px;
@@ -38,7 +43,7 @@
 }
 
 .form-group img {
-  border: 1px solid #124E78;
+  border: 1px solid #124e78;
   display: block;
   height: auto;
   min-height: 5em;
@@ -47,6 +52,6 @@
 }
 
 span.error {
-  color: #C70039;
-  font-size: .8em;
+  color: #c70039;
+  font-size: 0.8em;
 }
