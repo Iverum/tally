@@ -3,30 +3,14 @@
   "rules": {
     "import/extensions": 0,
     "import/no-extraneous-dependencies": 0,
-    "import/no-unresolved": [
-      2,
-      {
-        "ignore": [
-          "electron"
-        ]
-      }
-    ],
+    "import/no-unresolved": [2, { "ignore": ["electron"] }],
     "linebreak-style": 0,
     "react/prefer-stateless-function": 0,
-    "comma-dangle": [
-      "error",
-      "never"
-    ],
+    "comma-dangle": 0,
     "semi": 0,
-    "import/prefer-default-export": 0,
-    "quotes": [
-      "error",
-      "double"
-    ]
+    "import/prefer-default-export": 0
   },
-  "plugins": [
-    "jest"
-  ],
+  "plugins": ["jest"],
   "env": {
     "jest/globals": true
   }
