@@ -7,8 +7,27 @@ import TagList from "./components/tag-list";
 import { addSearchTerm, clearSearch } from "./dux";
 import { selectMediaById, selectTagsWithCountByImage } from "./selectors";
 
+const Information = ({ name, value }) => {
+  if (!value) return null;
+
+  return (
+    <dl>
+      <dt>{name}</dt>
+      <dd>{value}</dd>
+    </dl>
+  )
+}
+Information.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string
+}
+Information.defaultProps = {
+  value: null
+}
+
 class MediaView extends React.PureComponent {
   render() {
+    const { taggable, tags } = this.props;
     return (
       <div className="pane-group">
         <TagList
@@ -17,7 +36,7 @@ class MediaView extends React.PureComponent {
             this.props.actions.addSearchTerm(tagId);
             this.props.history.goBack();
           }}
-          tags={this.props.tags}
+          tags={tags}
         >
           <button
             className="btn btn-large btn-default"
@@ -25,11 +44,12 @@ class MediaView extends React.PureComponent {
           >
             Back
           </button>
+          <Information name="Source" value={taggable.source} />
         </TagList>
         <div className="pane">
           <img
             alt="TODO"
-            src={this.props.taggable.path}
+            src={taggable.path}
             width="100%"
             style={{ height: "100%", width: "100%", objectFit: "contain", display: "block" }}
           />
