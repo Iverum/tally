@@ -1,18 +1,18 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import PropTypes from "prop-types";
+import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import TagList from './components/tag-list';
-import { addSearchTerm, clearSearch } from './dux';
-import { selectMediaById, selectTagsWithCountByImage } from './selectors';
+import TagList from "./components/tag-list";
+import { addSearchTerm, clearSearch } from "./dux";
+import { selectMediaById, selectTagsWithCountByImage } from "./selectors";
 
 class MediaView extends React.PureComponent {
   render() {
     return (
       <div className="pane-group">
         <TagList
-          onTagClick={tagId => {
+          onTagClick={(tagId) => {
             this.props.actions.clearSearch();
             this.props.actions.addSearchTerm(tagId);
             this.props.history.goBack();
@@ -28,10 +28,9 @@ class MediaView extends React.PureComponent {
         </TagList>
         <div className="pane">
           <img
-            alt="TODO"
+            alt={this.props.tags.map(t => t.name).join()}
             src={this.props.taggable.path}
-            width="100%"
-            style={{ flex: 1 }}
+            style={{ height: "100%", width: "100%", objectFit: "contain", display: "block" }}
           />
         </div>
       </div>
