@@ -10,13 +10,29 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "airbnb"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     }
+  },
+  "rules": {
+    "react/prop-types": "off",
+    "import/extensions": "off",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    ]
   },
   "settings": {
     "react": {
