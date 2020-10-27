@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
 import styled from '@emotion/styled';
+import React, { FC } from 'react';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
 
 const HeaderRow = styled(Row)`
   background-color: #f7f7f7;
@@ -10,6 +10,8 @@ const HeaderRow = styled(Row)`
   display: flex;
   align-items: center;
   padding: 8px 15px;
+  position: sticky;
+  top: 0;
   > h1 {
     margin: 0
   }
@@ -24,9 +26,9 @@ interface HeaderProps {
   onBack?: () => void;
 }
 
-const Header: FC<HeaderProps> = ({ title, onBack }) => (
+const Header: FC<HeaderProps> = ({ onBack, title }) => (
   <HeaderRow>
-    {onBack && <Button variant="secondary" onClick={onBack}><i className="fas fa-chevron-left" /></Button>}
+    {onBack && <Button onClick={onBack} variant="secondary"><i className="fas fa-chevron-left" /></Button>}
     <h1>{title}</h1>
   </HeaderRow>
 );

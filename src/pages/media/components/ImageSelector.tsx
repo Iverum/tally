@@ -23,6 +23,14 @@ function dialogOptions(): OpenDialogOptions {
 const Container = styled(Form.Group)`
   display: flex;
   flex-direction: column;
+  width: 100%;
+`
+
+const Image = styled.img`
+  padding: 5px;
+  border: 1px solid #ececec;
+  margin-bottom: 5px;
+  width: 100%;
 `
 
 const HiddenInput = styled.input`
@@ -49,7 +57,7 @@ const ImageSelector: FC<ImageSelectorProps> = ({ input, label, meta }) => {
   }
   return (
     <Container>
-      <img alt="Placeholder" src={preview} />
+      <Image src={preview} />
       <HiddenInput onChange={input.onChange} value={input.value} />
       <Button onClick={selectFile} variant="secondary">{label}</Button>
     </Container>

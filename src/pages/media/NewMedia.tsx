@@ -15,14 +15,12 @@ const Content = styled(Row)`
   padding: 30px;
 `;
 
+const StyledForm = styled(FormElement)`
+  width: 100%;
+`
+
 const Submit = styled(Button)`
   margin-top: 10px;
-`
-const PreviewPlaceholder = styled.div`
-  width: 1em;
-  height: 1em;
-  border: 1px solid #ececec;
-  margin-bottom: 5px;
 `
 
 const NewMediaForm: FC = () => {
@@ -30,13 +28,13 @@ const NewMediaForm: FC = () => {
     <Form
       onSubmit={(values) => console.log('Submit', { values })}
       render={({ handleSubmit }) => (
-        <FormElement onSubmit={handleSubmit}>
+        <StyledForm onSubmit={handleSubmit}>
           <Field<string> label="Upload" name="image" component={ImageSelector} />
           <Field<string> label="Tags" name="tags" component={TextInput} placeholder="Tags" />
           <Field<string> label="Source" name="source" type="url" component={TextInput} />
           <Field<boolean> label="NSFW" name="nsfw" component={CheckboxInput} type="checkbox" />
           <Submit type="submit">Submit</Submit>
-        </FormElement >
+        </StyledForm >
       )}
     />
   );
