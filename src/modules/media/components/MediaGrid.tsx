@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
 import React, { FC } from 'react';
 
+import Image from "../components/Image"
+import { Media } from '../slice';
+
 const Grid = styled.section`
   display: flex;
   flex-direction: row;
@@ -14,13 +17,14 @@ const Grid = styled.section`
   }
 `;
 
-const MediaGrid: FC = () => (
+type MediaGridProps = {
+  media: Media[]
+}
+
+const MediaGrid: FC<MediaGridProps> = ({ media }) => (
   <Grid>
-    {Array(10).fill(0).map((_, index) => {
-      if (index % 2 === 0) {
-        return <img alt="A kitten" src="https://placekitten.com/400/200" />;
-      }
-      return <img alt="A kitten" src="https://placekitten.com/200/300" />;
+    {media.map((m) => {
+      return <Image alt={m.source || ""} key={m.id} path={m.path} />;
     })}
   </Grid>
 );

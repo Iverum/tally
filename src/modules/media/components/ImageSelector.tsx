@@ -7,6 +7,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form"
 import { FieldRenderProps } from 'react-final-form';
 
+import { Error } from "../../../components/form/Input"
+import Image from "../components/Image"
+
 const { app, dialog } = remote;
 const picturesPath = app.getPath("pictures");
 let lastPath: undefined | string;
@@ -26,13 +29,6 @@ const Container = styled(Form.Group)`
   width: 100%;
 `
 
-const Image = styled.img`
-  padding: 5px;
-  border: 1px solid #ececec;
-  margin-bottom: 5px;
-  width: 100%;
-`
-
 const HiddenInput = styled.input`
   display: none;
 `
@@ -41,25 +37,23 @@ type ImageSelectorProps = FieldRenderProps<string, HTMLInputElement> & {
   label: string;
 }
 
-const ImageSelector: FC<ImageSelectorProps> = ({ input, label, meta }) => {
-  const [preview, setPreview] = useState(undefined);
+const ImageSelector: FC<ImageSelectorProps> = ({ input, label, meta: { error, touched } }) => {
   // TODO: this logic should probably be moved out of the render and into the Electron main
   const selectFile = async () => {
     const result = await dialog.showOpenDialog(remote.getCurrentWindow(), dialogOptions())
     if (!(result && result.filePaths[0])) {
-      return; // TODO maybe error
+      return;
     }
 
-    var img = fs.readFileSync(result.filePaths[0]).toString('base64');
     lastPath = path.dirname(result.filePaths[0])
     input.onChange(result.filePaths[0])
-    setPreview(`data:image/png;base64,${img}`)
   }
   return (
     <Container>
-      <Image src={preview} />
+      <Image alt="New image to upload" path={input.value} />
       <HiddenInput onChange={input.onChange} value={input.value} />
       <Button onClick={selectFile} variant="secondary">{label}</Button>
+      { touched && (error && <Error>{error}</Error>)}
     </Container>
   )
 };
