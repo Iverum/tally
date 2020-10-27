@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
 import styled from '@emotion/styled';
+import React, { FC } from 'react';
 
 const Grid = styled.section`
   display: flex;
@@ -11,7 +11,6 @@ const Grid = styled.section`
     margin: 3px;
     padding: 1px;
     border: 1px solid #ececec;
-    width: 30%
   }
 `;
 
@@ -19,9 +18,9 @@ const MediaGrid: FC = () => (
   <Grid>
     {Array(10).fill(0).map((_, index) => {
       if (index % 2 === 0) {
-        return <img src="https://placekitten.com/400/200" alt="A kitten" />;
+        return <img alt="A kitten" src="https://placekitten.com/400/200" />;
       }
-      return <img src="https://placekitten.com/200/300" alt="A kitten" />;
+      return <img alt="A kitten" src="https://placekitten.com/200/300" />;
     })}
   </Grid>
 );

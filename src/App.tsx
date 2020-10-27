@@ -2,11 +2,11 @@ import * as React from 'react';
 import { hot } from 'react-hot-loader';
 import Row from 'react-bootstrap/Row';
 import styled from '@emotion/styled';
+import { MemoryRouter as Router, Route, Switch } from 'react-router-dom';
 
-import MainContent from './components/layout/MainContent';
-import SideNav from './components/layout/SideNav';
 import Page from './components/layout/Page';
-import MediaGrid from './components/MediaGrid';
+import AllMedia from './pages/media';
+import NewMedia from './pages/media/NewMedia';
 
 const FullHeightRow = styled(Row)`
   height: 100%;
@@ -15,8 +15,16 @@ const FullHeightRow = styled(Row)`
 const App = (): JSX.Element => (
   <Page>
     <FullHeightRow>
-      <SideNav />
-      <MainContent><MediaGrid /></MainContent>
+      <Router>
+        <Switch>
+          <Route path="/new">
+            <NewMedia />
+          </Route>
+          <Route path="/">
+            <AllMedia />
+          </Route>
+        </Switch>
+      </Router>
     </FullHeightRow>
   </Page>
 );

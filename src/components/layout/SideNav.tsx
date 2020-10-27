@@ -3,8 +3,9 @@ import Col from 'react-bootstrap/Col';
 import FormControl from 'react-bootstrap/FormControl';
 import styled from '@emotion/styled';
 import Button from 'react-bootstrap/Button';
+import { useHistory } from 'react-router-dom';
 
-import TagList from '../TagList';
+import TagList from '../../pages/media/components/TagList';
 
 const StyledCol = styled(Col)`
   background-color: #f7f7f7;
@@ -23,18 +24,21 @@ const Controls = styled.div`
   }
 `;
 
-const SideNav: FC = () => (
-  <StyledCol xl={2} md={3}>
-    <Container className="sticky-top">
-      <FormControl type="text" placeholder="Search" />
-      <Controls>
-        <Button variant="primary">
-          Add
-        </Button>
-      </Controls>
-      <TagList />
-    </Container>
-  </StyledCol>
-);
+const SideNav: FC = () => {
+  const history = useHistory();
+  return (
+    <StyledCol xl={2} md={3}>
+      <Container className="sticky-top">
+        <FormControl type="text" placeholder="Search" />
+        <Controls>
+          <Button variant="primary" onClick={() => history.push('/new')}>
+            Add
+          </Button>
+        </Controls>
+        <TagList />
+      </Container>
+    </StyledCol>
+  );
+};
 
 export default SideNav;

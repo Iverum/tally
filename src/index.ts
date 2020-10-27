@@ -1,4 +1,4 @@
-import { app, BrowserWindow, nativeTheme } from 'electron';
+import { BrowserWindow, app, nativeTheme, protocol } from 'electron';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -11,7 +11,12 @@ const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 600,
-    width: 800,
+    webPreferences: {
+      enableRemoteModule: true,
+      nodeIntegration: true,
+      webSecurity: false,
+    },
+    width: 800
   });
 
   // and load the index.html of the app.
