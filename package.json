@@ -1,31 +1,16 @@
 {
-  "name": "tally",
-  "productName": "Tally",
-  "version": "1.0.0",
-  "description": "A local tagging solution",
-  "main": ".webpack/main",
-  "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts ."
-  },
-  "keywords": [],
   "author": {
-    "name": "Blake Hair",
-    "email": "blake.hair@gmail.com"
+    "email": "blake.hair@gmail.com",
+    "name": "Blake Hair"
   },
-  "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
       "makers": [
         {
-          "name": "@electron-forge/maker-squirrel",
           "config": {
             "name": "tally"
-          }
+          },
+          "name": "@electron-forge/maker-squirrel"
         },
         {
           "name": "@electron-forge/maker-zip",
@@ -34,12 +19,12 @@
           ]
         },
         {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {},
+          "name": "@electron-forge/maker-deb"
         },
         {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
+          "config": {},
+          "name": "@electron-forge/maker-rpm"
         }
       ],
       "plugins": [
@@ -62,6 +47,30 @@
       ]
     }
   },
+  "dependencies": {
+    "@emotion/core": "^10.0.35",
+    "@emotion/styled": "^10.0.27",
+    "@reduxjs/toolkit": "^1.4.0",
+    "@types/react": "^16.9.51",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.6",
+    "bootstrap": "^4.5.2",
+    "electron-squirrel-startup": "^1.0.0",
+    "final-form": "^4.20.1",
+    "joi": "^17.3.0",
+    "pg-hstore": "^2.3.3",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.3.0",
+    "react-dom": "^16.13.1",
+    "react-final-form": "^6.5.1",
+    "react-hot-loader": "^4.13.0",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.2.0",
+    "redux-logger": "^3.0.6",
+    "sequelize": "^6.3.5",
+    "sqlite3": "^5.0.0"
+  },
+  "description": "A local tagging solution",
   "devDependencies": {
     "@electron-forge/cli": "6.0.0-beta.53",
     "@electron-forge/maker-deb": "6.0.0-beta.53",
@@ -88,24 +97,17 @@
     "ts-loader": "^8.0.2",
     "typescript": "^4.0.2"
   },
-  "dependencies": {
-    "@emotion/core": "^10.0.35",
-    "@emotion/styled": "^10.0.27",
-    "@reduxjs/toolkit": "^1.4.0",
-    "@types/react": "^16.9.51",
-    "@types/react-dom": "^16.9.8",
-    "@types/react-router-dom": "^5.1.6",
-    "bootstrap": "^4.5.2",
-    "electron-squirrel-startup": "^1.0.0",
-    "final-form": "^4.20.1",
-    "joi": "^17.3.0",
-    "react": "^16.13.1",
-    "react-bootstrap": "^1.3.0",
-    "react-dom": "^16.13.1",
-    "react-final-form": "^6.5.1",
-    "react-hot-loader": "^4.13.0",
-    "react-redux": "^7.2.2",
-    "react-router-dom": "^5.2.0",
-    "redux-logger": "^3.0.6"
-  }
+  "keywords": [],
+  "license": "MIT",
+  "main": ".webpack/main",
+  "name": "tally",
+  "productName": "Tally",
+  "scripts": {
+    "lint": "eslint --ext .ts .",
+    "make": "electron-forge make",
+    "package": "electron-forge package",
+    "publish": "electron-forge publish",
+    "start": "electron-forge start"
+  },
+  "version": "1.0.0"
 }
