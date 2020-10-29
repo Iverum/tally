@@ -1,5 +1,6 @@
 import models from './models'
+import Media, { MediaAttributes } from "./models/media"
 
-const { Media, sequelize } = models
+const { sequelize } = models
 
-export { Media, sequelize as default }
+export { Media, MediaAttributes, sequelize as default }

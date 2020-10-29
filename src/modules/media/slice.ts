@@ -4,7 +4,7 @@ import fs from "fs";
 import md5File from "md5-file";
 import path from 'path'
 
-import Media, { MediaAttributes } from "../../db/models/media"
+import { Media, MediaAttributes } from "../../db"
 
 type MediaState = EntityState<MediaAttributes>
 

@@ -5,7 +5,6 @@ import { Sequelize } from 'sequelize'
 import Media, { MediaTable } from "../models/media"
 
 type Database = {
-  Media?: typeof Media;
   Sequelize?: typeof Sequelize;
   sequelize?: Sequelize;
 }
@@ -20,7 +19,6 @@ const sequelize = new Sequelize('tally', 'tallyu', null, {
 })
 
 Media.init(MediaTable, { sequelize, tableName: "Media" })
-db.Media = Media;
 
 // Object.keys(db).forEach((modelName) => {
 //   if (db[modelName].associate) {

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React, { FC } from 'react';
 
-import { MediaAttributes } from "../../../db/models/media"
+import { MediaAttributes } from "../../../db"
 import Image from "../components/Image"
 
 const Grid = styled.section`
