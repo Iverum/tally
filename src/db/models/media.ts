@@ -1,32 +1,57 @@
-import { DataTypes, Sequelize } from "sequelize"
+import {
+  DataTypes,
+  Model,
+  Optional,
+} from "sequelize";
 
-export default (sequelize: Sequelize) => {
-  const Media = sequelize.define('Media', {
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER,
-      unique: true
-    },
-    path: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    safe: {
-      allowNull: false,
-      defaultValue: true,
-      type: DataTypes.BOOLEAN
-    },
-    source: {
-      allowNull: true,
-      type: DataTypes.STRING
-    }
-  })
-
-  // Media.associate = function associate(models: { Tag: any }) {
-  //   Media.belongsToMany(models.Tag, { as: 'tags', through: 'ItemTag' })
-  // }
-
-  return Media
+export interface MediaAttributes {
+  id: number;
+  nsfw: boolean;
+  path: string;
+  source?: string;
 }
+
+interface MediaCreationAttributes extends Optional<MediaAttributes, "id"> { }
+
+export const MediaTable = {
+  id: {
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: DataTypes.INTEGER,
+    unique: true
+  },
+  nsfw: {
+    allowNull: false,
+    defaultValue: false,
+    type: DataTypes.BOOLEAN
+  },
+  path: {
+    allowNull: false,
+    type: DataTypes.STRING
+  },
+  source: {
+    allowNull: true,
+    type: DataTypes.STRING
+  }
+}
+
+class Media extends Model<MediaAttributes, MediaCreationAttributes> implements MediaAttributes {
+  public id: number;
+  public nsfw: boolean;
+  public path: string;
+  public source: null | string;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  plain() {
+    return {
+      id: this.id,
+      nsfw: this.nsfw,
+      path: this.path,
+      source: this.source
+    }
+  }
+}
+
+export default Media;

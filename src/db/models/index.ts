@@ -1,12 +1,13 @@
 import { remote } from 'electron'
 import path from 'path'
-import { Model, Sequelize } from 'sequelize'
+import { Sequelize } from 'sequelize'
+
+import Media, { MediaTable } from "../models/media"
 
 type Database = {
+  Media?: typeof Media;
   Sequelize?: typeof Sequelize;
   sequelize?: Sequelize;
-} & {
-  [key: string]: typeof Model;
 }
 
 const { app } = remote
@@ -18,14 +19,8 @@ const sequelize = new Sequelize('tally', 'tallyu', null, {
   storage: DATABASE_PATH
 })
 
-const modules = [
-  require("../models/media").default
-]
-
-modules.forEach((module) => {
-  const model = module(sequelize, Sequelize);
-  db[model.name] = model;
-});
+Media.init(MediaTable, { sequelize, tableName: "Media" })
+db.Media = Media;
 
 // Object.keys(db).forEach((modelName) => {
 //   if (db[modelName].associate) {

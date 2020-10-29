@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import React, { FC } from 'react';
 
+import { MediaAttributes } from "../../../db/models/media"
 import Image from "../components/Image"
-import { Media } from '../slice';
 
 const Grid = styled.section`
   display: flex;
@@ -18,7 +18,7 @@ const Grid = styled.section`
 `;
 
 type MediaGridProps = {
-  media: Media[]
+  media: MediaAttributes[]
 }
 
 const MediaGrid: FC<MediaGridProps> = ({ media }) => (

@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import MainContent from '../../components/layout/MainContent';
 import SideNav from '../../components/layout/SideNav';
+import { MediaAttributes } from "../../db/models/media";
 import { RootState } from '../../store';
 import MediaGrid from './components/MediaGrid';
 import {
-  Media,
   fetchMedia,
   selectAllMedia,
   selectTotalMedia,
@@ -14,7 +14,7 @@ import {
 
 const AllMedia: FC = () => {
   const count = useSelector(selectTotalMedia);
-  const media: Media[] = useSelector(selectAllMedia) as Media[];
+  const media: MediaAttributes[] = useSelector(selectAllMedia) as MediaAttributes[];
   const mediaLoading = useSelector((state: RootState) => state.media.loading);
   const dispatch = useDispatch();
   useEffect(() => { dispatch(fetchMedia()) }, [])

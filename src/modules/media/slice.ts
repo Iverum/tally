@@ -1,21 +1,36 @@
 import { EntityState, createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit"
+import { remote } from 'electron'
+import fs from "fs";
+import md5File from "md5-file";
+import path from 'path'
 
-export type Media = {
-  id: string;
-  nsfw: boolean;
-  path: string;
-  source?: string;
-  tags?: string;
-}
+import Media, { MediaAttributes } from "../../db/models/media"
 
-type MediaState = EntityState<Media>
+type MediaState = EntityState<MediaAttributes>
 
-export const fetchMedia = createAsyncThunk("media/fetchAll", (): Media[] => {
+const { app } = remote
+const MEDIA_DIR = path.join(app.getPath('userData'), "media")
+
+export const fetchMedia = createAsyncThunk("media/fetchAll", (): MediaAttributes[] => {
   return [];
 })
 
-export const addOneMedia = createAsyncThunk("media/addOne", (values: { image: string, nsfw: boolean, source?: string, tags?: string }): Media => {
-  return { id: "test", nsfw: values.nsfw, path: values.image, source: values.source, tags: values.tags };
+export const addOneMedia = createAsyncThunk("media/addOne", async (values: { image: string, nsfw: boolean, source?: string, tags?: string }): Promise<MediaAttributes> => {
+  const hash = md5File.sync(values.image);
+  const extension = path.extname(values.image)
+  const linkname = `${path.join(MEDIA_DIR, hash)}${extension}`
+  fs.linkSync(values.image, linkname);
+  try {
+    const newMedia = await Media.create({
+      path: linkname,
+      nsfw: values.nsfw,
+      source: values.source,
+    })
+    return newMedia.plain();
+  } catch (err) {
+    fs.unlinkSync(linkname)
+    throw err
+  }
 })
 
 export const mediaAdapter = createEntityAdapter()
@@ -41,10 +56,7 @@ export const slice = createSlice({
   }
 })
 
-const reducer = slice.reducer
-export default reducer
-
-// export const { } = slice.actions
+export default slice.reducer
 
 export const {
   selectAll: selectAllMedia,
